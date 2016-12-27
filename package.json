@@ -1,5 +1,5 @@
 {
-  "name": "zootopia-dev",
+  "name": "BLE-Locator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "dev": "webpack-dev-server --watch --hot --devtool eval --progress --colors --content-base build"
   },
   "keywords": [],
-  "author": "",
+  "author": "Chien-Fu Chen <chienfuchen32@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "react": "^15.4.1",
