@@ -1,5 +1,5 @@
 {
-  "name": "BLE-Locator",
+  "name": "ble_locator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
