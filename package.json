@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack --config webpack.config_build.js",
     "dev": "webpack-dev-server --watch --hot --devtool eval --progress --colors --content-base build"
   },
   "keywords": [],
@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "semantic-ui-css": "^2.2.4",
+    "semantic-ui-react": "^0.63.2"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
