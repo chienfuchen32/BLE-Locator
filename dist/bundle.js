@@ -55989,19 +55989,14 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'sk-double-bounce', style: this.props.size },
-	                _react2.default.createElement('div', { className: 'sk-child sk-double-bounce1', style: (this.props.pos, this.props.color) })
+	                { className: 'sk-double-bounce', style: this.props.style1 },
+	                _react2.default.createElement('div', { className: 'sk-child sk-double-bounce1', style: this.props.style2 })
 	            );
 	        }
 	    }]);
 
 	    return Ble_Device;
 	}(_react2.default.Component);
-
-	var canvas_style_init = {
-	    width: 800,
-	    height: 600
-	};
 
 	var Locator = function (_React$Component2) {
 	    _inherits(Locator, _React$Component2);
@@ -56011,7 +56006,15 @@
 
 	        var _this2 = _possibleConstructorReturn(this, (Locator.__proto__ || Object.getPrototypeOf(Locator)).call(this, props));
 
-	        _this2.state = {};
+	        _this2.state = {
+	            ui: {
+	                canvas_style: {
+	                    width: 800,
+	                    height: 800
+	                }
+	            }
+
+	        };
 	        return _this2;
 	    }
 
@@ -56036,16 +56039,15 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var style = {
+	            var div_style = {
 	                position: "absolute",
-	                top: "",
-	                right: "",
+	                top: "0",
+	                right: "0",
 	                width: "100%",
-	                paddingTop: "75%", /* 1:1 Aspect Ratio */
-	                zIndex: "-1",
-	                backgroundColor: "darkgrey"
-	            };
-	            var style2 = {
+	                paddingTop: "100%", /* 1:1 Aspect Ratio */
+	                // zIndex: "-1",
+	                backgroundColor: "darkgrey" };
+	            var canvas_style = {
 	                position: "absolute",
 	                top: "0",
 	                left: "0",
@@ -56053,34 +56055,40 @@
 	                bottom: "0",
 	                zIndex: "0",
 	                width: "100%",
-	                height: "100%"
-	            };
-	            var size = { width: "100px", height: "100px" };
-	            var size2 = { width: "120px", height: "120px" };
-	            var pos = { top: "300px", left: "300px" };
-	            var color = { backgroundColor: "rgba(0,255,0,0.3)" };
-	            var stt = { width: "100%", height: "100px", backgroundColor: "black", left: "0" };
-	            var stt1 = { width: "100%", height: "100px", backgroundColor: "red", left: "0" };
-	            var stt2 = { width: "100%", height: "100px", backgroundColor: "blue", left: "0" };
+	                height: "100%" };
+	            var div_background_style = {
+	                width: this.state.ui.canvas_style.width,
+	                height: this.state.ui.canvas_style.height };
+
+	            var style1 = { top: "300px", left: "300px", width: "20%", height: "20%" };
+	            var style2 = { backgroundColor: "rgba(0,255,0,0.3)" };
+
+	            /*const stt = {width:"100%",height:"100px",backgroundColor:"black",left:"0"}
+	            const stt1 = {width:"100%",height:"100px",backgroundColor:"red",left:"0"}
+	            const stt2 = {width:"100%",height:"100px",backgroundColor:"blue",left:"0"}*/
+	            var test = {
+	                position: "relative",
+	                top: "0",
+	                left: "0" };
 	            return _react2.default.createElement(
 	                _semanticUiReact.Grid,
 	                null,
 	                _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 1 }),
 	                _react2.default.createElement(
 	                    _semanticUiReact.Grid.Column,
-	                    { width: 11 },
+	                    { width: 10, style: test },
+	                    _react2.default.createElement('div', { style: div_background_style }),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { style: style },
-	                        _react2.default.createElement('canvas', { ref: 'canvas', width: canvas_style_init.width, height: canvas_style_init.height, style: style2 })
+	                        { style: div_style },
+	                        _react2.default.createElement('canvas', { ref: 'canvas', width: this.state.ui.canvas_style.width, height: this.state.ui.canvas_style.height, style: canvas_style })
 	                    ),
-	                    _react2.default.createElement(Ble_Device, { size: size, pos: pos }),
-	                    _react2.default.createElement(Ble_Device, { size: size2, pos: pos, color: color })
+	                    _react2.default.createElement(Ble_Device, { style1: style1, style2: style2 })
 	                ),
 	                _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 1 }),
 	                _react2.default.createElement(
 	                    _semanticUiReact.Grid.Column,
-	                    { width: 2 },
+	                    { width: 3 },
 	                    _react2.default.createElement(
 	                        _semanticUiReact.Grid,
 	                        null,
