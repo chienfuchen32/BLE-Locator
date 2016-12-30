@@ -75,6 +75,26 @@
 
 	var _Locator2 = _interopRequireDefault(_Locator);
 
+	var _Map_Setup = __webpack_require__(713);
+
+	var _Map_Setup2 = _interopRequireDefault(_Map_Setup);
+
+	var _BLE_List = __webpack_require__(714);
+
+	var _BLE_List2 = _interopRequireDefault(_BLE_List);
+
+	var _Account = __webpack_require__(715);
+
+	var _Account2 = _interopRequireDefault(_Account);
+
+	var _Login = __webpack_require__(716);
+
+	var _Login2 = _interopRequireDefault(_Login);
+
+	var _Logout = __webpack_require__(717);
+
+	var _Logout2 = _interopRequireDefault(_Logout);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -92,7 +112,9 @@
 
 	    var _this = _possibleConstructorReturn(this, (MenuExampleSecondaryPointing.__proto__ || Object.getPrototypeOf(MenuExampleSecondaryPointing)).call(this, props));
 
-	    _this.state = { activeItem: 'home' };
+	    _this.state = {
+	      activeItem: 'map setup'
+	    };
 	    return _this;
 	  }
 
@@ -104,23 +126,48 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var activeItem = this.state.activeItem;
-
+	      var main = null;
+	      switch (this.state.activeItem) {
+	        case "ble locator":
+	          main = _react2.default.createElement(_Locator2.default, null);
+	          break;
+	        case "map setup":
+	          main = _react2.default.createElement(_Map_Setup2.default, null);
+	          break;
+	        case "ble list":
+	          main = _react2.default.createElement(_BLE_List2.default, null);
+	          break;
+	        case "account":
+	          main = _react2.default.createElement(_Account2.default, null);
+	          break;
+	        case "login":
+	          main = _react2.default.createElement(_Login2.default, null);
+	          break;
+	        case "logout":
+	          main = _react2.default.createElement(_Logout2.default, null);
+	          break;
+	        default:
+	          main = _react2.default.createElement(_Locator2.default, null);
+	          break;
+	      }
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          _semanticUiReact.Menu,
-	          { pointing: true, secondary: true },
-	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'home', active: activeItem === 'home', onClick: this.handleItemClick.bind(this, 'home') }),
-	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'setup', active: activeItem === 'setup', onClick: this.handleItemClick.bind(this, 'setup') }),
+	          { pointing: true, secondary: true, color: 'blue' },
+	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE locator', active: this.state.activeItem === 'ble locator', onClick: this.handleItemClick.bind(this, 'ble locator') }),
+	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'map setup', active: this.state.activeItem === 'map setup', onClick: this.handleItemClick.bind(this, 'map setup') }),
+	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE list', active: this.state.activeItem === 'ble list', onClick: this.handleItemClick.bind(this, 'ble list') }),
 	          _react2.default.createElement(
 	            _semanticUiReact.Menu.Menu,
 	            { position: 'right' },
-	            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'logout', active: activeItem === 'logout', onClick: this.handleItemClick.bind(this, 'logout') })
+	            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'account', active: this.state.activeItem === 'account', onClick: this.handleItemClick.bind(this, 'account') }),
+	            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'login', active: this.state.activeItem === 'login', onClick: this.handleItemClick.bind(this, 'login') }),
+	            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'logout', active: this.state.activeItem === 'logout', onClick: this.handleItemClick.bind(this, 'logout') })
 	          )
 	        ),
-	        _react2.default.createElement(_Locator2.default, null)
+	        main
 	      );
 	    }
 	  }]);
@@ -55969,6 +56016,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -55989,8 +56038,8 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'sk-double-bounce', style: this.props.style1 },
-	                _react2.default.createElement('div', { className: 'sk-child sk-double-bounce1', style: this.props.style2 })
+	                { className: 'sk-double-bounce', style: this.props.quality },
+	                _react2.default.createElement('div', { className: 'sk-child sk-double-bounce1', style: this.props.color })
 	            );
 	        }
 	    }]);
@@ -55998,44 +56047,199 @@
 	    return Ble_Device;
 	}(_react2.default.Component);
 
-	var Locator = function (_React$Component2) {
-	    _inherits(Locator, _React$Component2);
+	var Ble_Devices = function (_React$Component2) {
+	    _inherits(Ble_Devices, _React$Component2);
+
+	    function Ble_Devices(props) {
+	        _classCallCheck(this, Ble_Devices);
+
+	        return _possibleConstructorReturn(this, (Ble_Devices.__proto__ || Object.getPrototypeOf(Ble_Devices)).call(this, props)); //ble_devices:[]//type1 {bd_addr:"",color:"",distance:[{pos:"",size:""}]}, type2 {bd_addr:"",color:"",locations:[{x:x,y:y},...]}
+	    }
+
+	    _createClass(Ble_Devices, [{
+	        key: 'render',
+	        value: function render() {
+	            var ble_devices_ui = this.props.ble_devices;
+	            var ble_devices = void 0;
+	            var compoment_key = 0;
+	            if (ble_devices_ui.length != 0) {
+	                ble_devices = [];
+	                for (var i = 0; i < ble_devices_ui.length; i++) {
+	                    if (ble_devices_ui[i].distance.length != 0) {
+	                        for (var j = 0; j < ble_devices_ui[i].distance.length; j++) {
+	                            var quality = { top: ble_devices_ui[i].distance[j].pos.top, left: ble_devices_ui[i].distance[j].pos.left, width: ble_devices_ui[i].distance[j].size.width, height: ble_devices_ui[i].distance[j].size.height };
+	                            var color = { backgroundColor: ble_devices_ui[i].color };
+	                            ble_devices.push(_react2.default.createElement(Ble_Device, { key: compoment_key, quality: quality, color: color }));
+	                            compoment_key++;
+	                        }
+	                    }
+	                    if (ble_devices_ui[i].locations.length != 0) {
+	                        //undefined
+	                    }
+	                }
+	            }
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                ble_devices
+	            );
+	        }
+	    }]);
+
+	    return Ble_Devices;
+	}(_react2.default.Component);
+
+	var Locator = function (_React$Component3) {
+	    _inherits(Locator, _React$Component3);
 
 	    function Locator(props) {
+	        var _part;
+
 	        _classCallCheck(this, Locator);
 
-	        var _this2 = _possibleConstructorReturn(this, (Locator.__proto__ || Object.getPrototypeOf(Locator)).call(this, props));
+	        var _this3 = _possibleConstructorReturn(this, (Locator.__proto__ || Object.getPrototypeOf(Locator)).call(this, props));
 
-	        _this2.state = {
+	        _this3.state = {
 	            ui: {
 	                canvas_style: {
 	                    width: 800,
 	                    height: 800
-	                }
-	            }
-
+	                },
+	                main_grid: {
+	                    part1: {
+	                        width: 1 / 16 * 100 + "%",
+	                        display: "inline-block"
+	                    },
+	                    part2: (_part = {
+	                        width: 10 / 16 * 100 + "%",
+	                        display: "block"
+	                    }, _defineProperty(_part, 'display', "inline-block"), _defineProperty(_part, 'position', "relative"), _defineProperty(_part, 'top', "0"), _defineProperty(_part, 'left', "0"), _part),
+	                    part3: {
+	                        width: 1 / 16 * 100 + "%",
+	                        display: "inline-block"
+	                    },
+	                    part4: {
+	                        width: 3 / 16 * 100 + "%",
+	                        display: "inline-block"
+	                    }
+	                },
+	                ble_devices: [] //type1 {bd_addr:"",color:"",distance:[{pos:"",size:""}]}, type2 {bd_addr:"",color:"",locations:[{x:x,y:y},...]}
+	            },
+	            data: {
+	                area: { width: 50, height: 50, meters_unit: 1 },
+	                ble_stations: [{ bd_addr: "00:1A:7D:DA:71:07", x: 30, y: 25, name: "raspberry pi1" }, { bd_addr: "00:1A:7D:DA:71:08", x: 10, y: 15, name: "raspberry pi2" }], //ble station object => {bd_addr:"",name:"",x,y}
+	                ble_devices: [{ bd_addr: "bd_addr1", distance: [{ s_bd_addr: "00:1A:7D:DA:71:07", distance: 4 }], locations: [] }, { bd_addr: "bd_addr2", distance: [{ s_bd_addr: "00:1A:7D:DA:71:07", distance: 10 }], locations: [] }] }
 	        };
-	        return _this2;
+	        _this3.bleLocationHandler = _this3.bleLocationHandler.bind(_this3);
+	        _this3.updateCanvas = _this3.updateCanvas.bind(_this3);
+	        _this3.updateDimensions = _this3.updateDimensions.bind(_this3);
+	        return _this3;
 	    }
 
 	    _createClass(Locator, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            //http: get ble_stations and setState of data.ble_stations
+	            //socket.io: get ble_devices and setState of data.ble_devices
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
+	            this.updateCanvas();
+	            // window.addEventListener("resize", this.updateDimensions);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            // window.removeEventListener("resize", this.updateDimensions);
+	        }
+	    }, {
+	        key: 'bleLocationHandler',
+	        value: function bleLocationHandler() {
+	            var area = this.state.data.area;
+	            var ble_statsions_data = this.state.data.ble_stations;
+	            var ble_devices_data = this.state.data.ble_devices;
+	            var ble_devices_ui = [];
+	            for (var i = 0; i < ble_devices_data.length; i++) {
+	                if (ble_devices_data[i].distance.length != 0) {
+	                    //type1
+	                    var Is_ble_devices_bd_addr_Existed = false;
+	                    for (var j = 0; j < ble_devices_data[i].distance.length; j++) {
+	                        for (var k = 0; k < ble_statsions_data.length; k++) {
+	                            if (ble_devices_data[i].distance[j].s_bd_addr == ble_statsions_data[k].bd_addr) {
+	                                var width_size = ble_devices_data[i].distance[j].distance / area.meters_unit / area.width * 100;
+	                                var height_size = ble_devices_data[i].distance[j].distance / area.meters_unit / area.height * 100;
+	                                var x_pos = ble_statsions_data[k].x / area.width * 100 - width_size / 2;
+	                                var y_pos = ble_statsions_data[k].y / area.height * 100 - height_size / 2;
+	                                var ble_devices_ui_distance = {
+	                                    pos: { left: x_pos + "%", top: y_pos + "%" },
+	                                    size: { width: width_size + "%", height: height_size + "%" }
+	                                };
+	                                if (Is_ble_devices_bd_addr_Existed) {
+	                                    ble_devices_ui[ble_devices_ui.length].distance.push(ble_devices_ui_distance);
+	                                } else {
+	                                    ble_devices_ui[ble_devices_ui.length] = {
+	                                        bd_addr: ble_devices_data[i].bd_addr,
+	                                        color: "rgba(255,0,0,0.3)",
+	                                        distance: [ble_devices_ui_distance],
+	                                        locations: []
+	                                    };
+	                                    Is_ble_devices_bd_addr_Existed = true;
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	                if (ble_devices_data[i].locations.length != 0) {//type2
+	                    //undefined
+	                }
+	            }
+	            var ui = {
+	                canvas_style: this.state.ui.canvas_style,
+	                main_grid: this.state.ui.main_grid,
+	                ble_devices: ble_devices_ui
+	            };
+	            this.setState({ ui: ui });
+	        }
+	    }, {
+	        key: 'updateCanvas',
+	        value: function updateCanvas() {
+	            var area = this.state.data.area;
+	            var ble_stations = this.state.data.ble_stations;
+
 	            var canvas_width = this.refs.canvas.width;
 	            var canvas_height = this.refs.canvas.height;
 	            var ctx = this.refs.canvas.getContext('2d');
 	            var img = new Image();
-	            img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+	            // img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+	            img.src = 'static/raspberry-white.png';
 	            img.onload = function () {
 	                var img_wigth = img.width;
 	                var img_height = img.height;
-	                ctx.drawImage(img, 30 / 50 * canvas_width - img_wigth / 2, 25 / 30 * canvas_height - img_height / 2); //,img_wigth/canvas_style_init.width*canvas_width,img_height/canvas_style_init.height*canvas_height
-	                ctx.fillRect(30 / 50 * canvas_width, 25 / 30 * canvas_height, 1, 1);
+	                for (var i = 0; i < ble_stations.length; i++) {
+	                    var x = ble_stations[i].x / area.width * canvas_width;
+	                    var y = ble_stations[i].y / area.height * canvas_height;
+	                    ctx.drawImage(img, x - img_wigth / 2, y - img_height / 2); //,img_wigth/canvas_style_init.width*canvas_width,img_height/canvas_style_init.height*canvas_height
+	                    ctx.fillRect(x, y, 1, 1);
+	                }
 	            };
+	            this.bleLocationHandler();
 	        }
 	    }, {
-	        key: 'updateCanvas',
-	        value: function updateCanvas() {}
+	        key: 'updateDimensions',
+	        value: function updateDimensions() {
+	            // const ui = {
+	            //         canvas_style:{
+	            //             width: canvas_width,
+	            //             height: canvas_height
+	            //         },
+	            //         main_grid: this.state.ui.main_grid,
+	            //         ble_devices: this.state.ble_devices,
+	            //     }
+	            // this.setState({ui: ui});
+	            // this.forceUpdate();
+	            console.log(this.state);
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -56056,57 +56260,31 @@
 	                zIndex: "0",
 	                width: "100%",
 	                height: "100%" };
-	            var div_background_style = {
-	                width: this.state.ui.canvas_style.width,
-	                height: this.state.ui.canvas_style.height };
-
-	            var style1 = { top: "300px", left: "300px", width: "20%", height: "20%" };
-	            var style2 = { backgroundColor: "rgba(0,255,0,0.3)" };
-
-	            /*const stt = {width:"100%",height:"100px",backgroundColor:"black",left:"0"}
-	            const stt1 = {width:"100%",height:"100px",backgroundColor:"red",left:"0"}
-	            const stt2 = {width:"100%",height:"100px",backgroundColor:"blue",left:"0"}*/
-	            var test = {
-	                position: "relative",
-	                top: "0",
-	                left: "0" };
+	            var ss100 = { display: "block" };
 	            return _react2.default.createElement(
-	                _semanticUiReact.Grid,
-	                null,
-	                _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 1 }),
+	                'div',
+	                { style: ss100 },
+	                _react2.default.createElement('div', { style: this.state.ui.main_grid.part1 }),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Grid.Column,
-	                    { width: 10, style: test },
-	                    _react2.default.createElement('div', { style: div_background_style }),
+	                    'div',
+	                    { style: this.state.ui.main_grid.part2 },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { style: div_style },
-	                        _react2.default.createElement('canvas', { ref: 'canvas', width: this.state.ui.canvas_style.width, height: this.state.ui.canvas_style.height, style: canvas_style })
-	                    ),
-	                    _react2.default.createElement(Ble_Device, { style1: style1, style2: style2 })
-	                ),
-	                _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 1 }),
-	                _react2.default.createElement(
-	                    _semanticUiReact.Grid.Column,
-	                    { width: 3 },
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Grid,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Grid.Column,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Image, { src: 'http://semantic-ui.com/images/wireframe/media-paragraph.png' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Grid,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Grid.Column,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Image, { src: 'http://semantic-ui.com/images/wireframe/media-paragraph.png' })
-	                        )
+	                        _react2.default.createElement('canvas', { ref: 'canvas', width: this.state.ui.canvas_style.width, height: this.state.ui.canvas_style.height, style: canvas_style }),
+	                        _react2.default.createElement(Ble_Devices, { ble_devices: this.state.ui.ble_devices })
 	                    )
+	                ),
+	                _react2.default.createElement('div', { style: this.state.ui.main_grid.part3 }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: this.state.ui.main_grid.part4 },
+	                    _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        'test'
+	                    ),
+	                    _react2.default.createElement(_semanticUiReact.Image, { src: 'http://semantic-ui.com/images/wireframe/media-paragraph.png' })
 	                )
 	            );
 	        }
@@ -56118,6 +56296,584 @@
 	exports.default = Locator;
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Locator.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 713 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(178);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _semanticUiReact = __webpack_require__(179);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Map_Setup = function (_React$Component) {
+	    _inherits(Map_Setup, _React$Component);
+
+	    function Map_Setup(props) {
+	        var _part;
+
+	        _classCallCheck(this, Map_Setup);
+
+	        var _this = _possibleConstructorReturn(this, (Map_Setup.__proto__ || Object.getPrototypeOf(Map_Setup)).call(this, props));
+
+	        _this.state = {
+	            ui: {
+	                canvas_style: {
+	                    width: 800,
+	                    height: 800
+	                },
+	                main_grid: {
+	                    part1: {
+	                        width: 1 / 16 * 100 + "%",
+	                        display: "inline-block"
+	                    },
+	                    part2: (_part = {
+	                        width: 10 / 16 * 100 + "%",
+	                        display: "block"
+	                    }, _defineProperty(_part, 'display', "inline-block"), _defineProperty(_part, 'position', "relative"), _defineProperty(_part, 'top', "0"), _defineProperty(_part, 'left', "0"), _part),
+	                    part3: {
+	                        width: 1 / 16 * 100 + "%",
+	                        display: "inline-block"
+	                    },
+	                    part4: {
+	                        width: 3 / 16 * 100 + "%",
+	                        display: "inline-block"
+	                    }
+	                }
+	            },
+	            data: {
+	                area: { width: 50, height: 50, meters_unit: 1 },
+	                ble_stations: [{ bd_addr: "00:1A:7D:DA:71:07", x: 30, y: 25, name: "raspberry pi1" }, { bd_addr: "00:1A:7D:DA:71:08", x: 10, y: 15, name: "raspberry pi2" }]
+	            }
+	        };
+	        _this.updateCanvas = _this.updateCanvas.bind(_this);
+	        _this.updateDimensions = _this.updateDimensions.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Map_Setup, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            //http: get ble_stations and setState of data.ble_stations
+	            //socket.io: get ble_devices and setState of data.ble_devices
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.updateCanvas();
+	            // window.addEventListener("resize", this.updateDimensions);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            // window.removeEventListener("resize", this.updateDimensions);
+	        }
+	    }, {
+	        key: 'updateCanvas',
+	        value: function updateCanvas() {
+	            var area = this.state.data.area;
+	            var ble_stations = this.state.data.ble_stations;
+
+	            var canvas_width = this.refs.canvas.width;
+	            var canvas_height = this.refs.canvas.height;
+	            var ctx = this.refs.canvas.getContext('2d');
+	            var img = new Image();
+	            // img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+	            img.src = 'static/raspberry-white.png';
+	            img.onload = function () {
+	                var img_wigth = img.width;
+	                var img_height = img.height;
+	                for (var i = 0; i < ble_stations.length; i++) {
+	                    var x = ble_stations[i].x / area.width * canvas_width;
+	                    var y = ble_stations[i].y / area.height * canvas_height;
+	                    ctx.drawImage(img, x - img_wigth / 2, y - img_height / 2); //,img_wigth/canvas_style_init.width*canvas_width,img_height/canvas_style_init.height*canvas_height
+	                    ctx.fillRect(x, y, 1, 1);
+	                }
+	            };
+	        }
+	    }, {
+	        key: 'updateDimensions',
+	        value: function updateDimensions() {
+	            // const ui = {
+	            //         canvas_style:{
+	            //             width: canvas_width,
+	            //             height: canvas_height
+	            //         },
+	            //         main_grid: this.state.ui.main_grid,
+	            //         ble_devices: this.state.ble_devices,
+	            //     }
+	            // this.setState({ui: ui});
+	            // this.forceUpdate();
+	            console.log(this.state);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var div_style = {
+	                position: "absolute",
+	                top: "0",
+	                right: "0",
+	                width: "100%",
+	                paddingTop: "100%", /* 1:1 Aspect Ratio */
+	                // zIndex: "-1",
+	                backgroundColor: "darkgrey" };
+	            var canvas_style = {
+	                position: "absolute",
+	                top: "0",
+	                left: "0",
+	                right: "0",
+	                bottom: "0",
+	                zIndex: "0",
+	                width: "100%",
+	                height: "100%" };
+	            var ss100 = { display: "block" };
+	            return _react2.default.createElement(
+	                'div',
+	                { style: ss100 },
+	                _react2.default.createElement('div', { style: this.state.ui.main_grid.part1 }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: this.state.ui.main_grid.part2 },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { style: div_style },
+	                        _react2.default.createElement('canvas', { ref: 'canvas', width: this.state.ui.canvas_style.width, height: this.state.ui.canvas_style.height, style: canvas_style })
+	                    )
+	                ),
+	                _react2.default.createElement('div', { style: this.state.ui.main_grid.part3 }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: this.state.ui.main_grid.part4 },
+	                    _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        'test'
+	                    ),
+	                    _react2.default.createElement(_semanticUiReact.Image, { src: 'http://semantic-ui.com/images/wireframe/media-paragraph.png' })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Map_Setup;
+	}(_react2.default.Component);
+
+	exports.default = Map_Setup;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Map_Setup.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 714 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(178);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _semanticUiReact = __webpack_require__(179);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BLE_List = function (_React$Component) {
+	    _inherits(BLE_List, _React$Component);
+
+	    function BLE_List(props) {
+	        _classCallCheck(this, BLE_List);
+
+	        var _this = _possibleConstructorReturn(this, (BLE_List.__proto__ || Object.getPrototypeOf(BLE_List)).call(this, props));
+
+	        _this.state = {};
+	        return _this;
+	    }
+
+	    _createClass(BLE_List, [{
+	        key: 'render',
+	        value: function render() {
+	            var color = 'orange';
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _semanticUiReact.Grid,
+	                    null,
+	                    _react2.default.createElement(
+	                        _semanticUiReact.Grid.Row,
+	                        null,
+	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 2 }),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Grid.Column,
+	                            { width: 3 },
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Grid.Column,
+	                                null,
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Segment,
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.List,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _semanticUiReact.List.Item,
+	                                            null,
+	                                            _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative' }),
+	                                            _react2.default.createElement(
+	                                                _semanticUiReact.List.Content,
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Header,
+	                                                    { as: 'a' },
+	                                                    'device1'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    'user1'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    'bd_addr1'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    '2016-12-29 08:24:58'
+	                                                )
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Grid.Column,
+	                            { width: 3 },
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Grid.Column,
+	                                null,
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Segment,
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.List,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _semanticUiReact.List.Item,
+	                                            null,
+	                                            _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative' }),
+	                                            _react2.default.createElement(
+	                                                _semanticUiReact.List.Content,
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Header,
+	                                                    { as: 'a' },
+	                                                    'device2'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    'user2'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    'bd_addr2'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    '2016-12-30 15:34:00'
+	                                                )
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 2 })
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return BLE_List;
+	}(_react2.default.Component);
+
+	exports.default = BLE_List;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "BLE_List.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 715 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(178);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _semanticUiReact = __webpack_require__(179);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Account = function (_React$Component) {
+	    _inherits(Account, _React$Component);
+
+	    function Account(props) {
+	        _classCallCheck(this, Account);
+
+	        var _this = _possibleConstructorReturn(this, (Account.__proto__ || Object.getPrototypeOf(Account)).call(this, props));
+
+	        _this.state = {
+	            formData: {}
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Account, [{
+	        key: 'render',
+	        value: function render() {
+	            var genders = [{ text: 'Male', value: 'male' }, { text: 'Female', value: 'female' }];
+	            var products = [{ text: 'bd_addr1', value: 'bd_addr1' }, { text: 'bd_addr2', value: 'bd_addr2' }];
+	            var color = 'blue';
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _semanticUiReact.Grid,
+	                    null,
+	                    _react2.default.createElement(
+	                        _semanticUiReact.Grid.Row,
+	                        null,
+	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 4 }),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Grid.Column,
+	                            { width: 8 },
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Form,
+	                                null,
+	                                _react2.default.createElement(_semanticUiReact.Form.Input, { label: 'ID', name: 'id', placeholder: 'a-z,A-Z,0-9' }),
+	                                _react2.default.createElement(_semanticUiReact.Form.Input, { label: 'Password', name: 'password', placeholder: 'a-z,A-Z,0-9' }),
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Form.Group,
+	                                    { widths: 'equal' },
+	                                    _react2.default.createElement(_semanticUiReact.Form.Input, { label: 'Name', name: 'name', placeholder: 'Name' }),
+	                                    _react2.default.createElement(_semanticUiReact.Form.Select, { label: 'Gender', name: 'gender', options: genders, placeholder: 'Gender' })
+	                                ),
+	                                _react2.default.createElement(_semanticUiReact.Form.Input, { label: 'Email', placeholder: 'email@email.com' }),
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Form.Group,
+	                                    { widths: '2' },
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.Form.Field,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            null,
+	                                            'Plan'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _semanticUiReact.Form.Group,
+	                                            { inline: true },
+	                                            _react2.default.createElement(_semanticUiReact.Form.Radio, { label: 'Male', name: 'gender', value: '1', checked: true }),
+	                                            _react2.default.createElement(_semanticUiReact.Form.Radio, { label: 'Female', name: 'gender', value: '2' })
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(_semanticUiReact.Form.Select, { label: 'BLE Devices', name: 'ble devices', options: products, placeholder: 'Search...', search: true, multiple: true }),
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Button,
+	                                    { basic: true, color: color, type: 'submit' },
+	                                    'Submit'
+	                                ),
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Message,
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'pre',
+	                                        null,
+	                                        'formData'
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 4 })
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Account;
+	}(_react2.default.Component);
+
+	exports.default = Account;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Account.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 716 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(178);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Login = function Login() {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'h1',
+	            null,
+	            '123'
+	        )
+	    );
+	};
+
+	exports.default = Login;
+
+	/*<Table color={color} inverted>
+	    <Table.Header>
+	    <Table.Row>
+	        <Table.HeaderCell>Device Name</Table.HeaderCell>
+	        <Table.HeaderCell>Owner</Table.HeaderCell>
+	        <Table.HeaderCell>BD Address</Table.HeaderCell>
+	        <Table.HeaderCell>Datetime Nearby</Table.HeaderCell>
+	    </Table.Row>
+	    </Table.Header>
+	      <Table.Body>
+	    <Table.Row>
+	        <Table.Cell>device1</Table.Cell>
+	        <Table.Cell></Table.Cell>
+	        <Table.Cell></Table.Cell>
+	        <Table.Cell>2016-10-15 00:15:00</Table.Cell>
+	    </Table.Row>
+	    <Table.Row>
+	        <Table.Cell>device2</Table.Cell>
+	        <Table.Cell>user1</Table.Cell>
+	        <Table.Cell>bd_addr2</Table.Cell>
+	        <Table.Cell>2016-12-30 15:30:00</Table.Cell>
+	    </Table.Row>
+	    </Table.Body>
+	    <Table.Footer>
+	    <Table.Row>
+	        <Table.HeaderCell colSpan='4'>
+	        <Menu color={color} inverted floated='right' pagination>
+	            <Menu.Item as='a' icon>
+	            <Icon name='left chevron' />
+	            </Menu.Item>
+	            <Menu.Item as='a'>1</Menu.Item>
+	            <Menu.Item as='a'>2</Menu.Item>
+	            <Menu.Item as='a'>3</Menu.Item>
+	            <Menu.Item as='a'>4</Menu.Item>
+	            <Menu.Item as='a' icon>
+	            <Icon name='right chevron' />
+	            </Menu.Item>
+	        </Menu>
+	        </Table.HeaderCell>
+	    </Table.Row>
+	    </Table.Footer>
+	</Table>*/
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Login.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 717 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(178);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Logout = function Logout() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h1',
+	      null,
+	      'Logout'
+	    )
+	  );
+	};
+
+	exports.default = Logout;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\JS\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Logout.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);

@@ -32,6 +32,7 @@ export default class Locator extends React.Component {
         const ctx = this.refs.canvas.getContext('2d');
         var img = new Image();
         img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+        // img.src = 'static/raspberry-white.png';
         img.onload = function(){
             let img_wigth = img.width;
             let img_height = img.height;

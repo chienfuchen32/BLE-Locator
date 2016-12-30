@@ -4,13 +4,17 @@ import React from 'react';
 import { Menu, Segment } from 'semantic-ui-react';
 
 import Locator from './Locator';
-import Setup from './Setup';
+import Map_Setup from './Map_Setup';
+import BLE_List from './BLE_List';
+import Account from './Account';
+import Login from './Login';
+import Logout from './Logout';
 
 export default class MenuExampleSecondaryPointing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'home' 
+      activeItem: 'map setup' 
     }
   }
   handleItemClick(name){ 
@@ -19,17 +23,23 @@ export default class MenuExampleSecondaryPointing extends React.Component {
   render() {
     let main = null;
     switch (this.state.activeItem){
-      case "home":
+      case "ble locator":
           main = <Locator />
           break;
         case "map setup":
-          main = <Setup />
+          main = <Map_Setup />
           break;
         case "ble list":
-          main = <Setup />
+          main = <BLE_List />
           break;
         case "account":
-          main = <Setup />
+          main = <Account />
+          break;
+        case "login":
+          main = <Login />
+          break;
+        case "logout":
+          main = <Logout />
           break;
         default:
           main = <Locator />
@@ -37,12 +47,13 @@ export default class MenuExampleSecondaryPointing extends React.Component {
     }
     return (
       <div>
-        <Menu pointing secondary>
-          <Menu.Item name='home' active={this.state.activeItem === 'home'} onClick={this.handleItemClick.bind(this, 'home')} />
+        <Menu pointing secondary color={'blue'}>
+          <Menu.Item name='BLE locator' active={this.state.activeItem === 'ble locator'} onClick={this.handleItemClick.bind(this, 'ble locator')} />
           <Menu.Item name='map setup' active={this.state.activeItem === 'map setup'} onClick={this.handleItemClick.bind(this, 'map setup')} />
           <Menu.Item name='BLE list' active={this.state.activeItem === 'ble list'} onClick={this.handleItemClick.bind(this, 'ble list')} />
           <Menu.Menu position='right'>
             <Menu.Item name='account' active={this.state.activeItem === 'account'} onClick={this.handleItemClick.bind(this, 'account')} />
+            <Menu.Item name='login' active={this.state.activeItem === 'login'} onClick={this.handleItemClick.bind(this, 'login')} />
             <Menu.Item name='logout' active={this.state.activeItem === 'logout'} onClick={this.handleItemClick.bind(this, 'logout')} />
           </Menu.Menu>
         </Menu>
