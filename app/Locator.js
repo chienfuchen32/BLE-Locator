@@ -158,7 +158,7 @@ export default class Locator extends React.Component {
         const canvas_width = this.refs.canvas.width;
         const canvas_height = this.refs.canvas.height;
         const ctx = this.refs.canvas.getContext('2d');
-        var img = new Image();
+        var img = new window.Image();
         img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
         // img.src = 'static/raspberry-white.png';
         img.onload = function(){
@@ -168,7 +168,7 @@ export default class Locator extends React.Component {
                 let x = ble_stations[i].x/area.width*canvas_width;
                 let y = ble_stations[i].y/area.height*canvas_height;
                 ctx.drawImage(img,x-img_wigth/2,y-img_height/2);//,img_wigth/canvas_style_init.width*canvas_width,img_height/canvas_style_init.height*canvas_height
-                ctx.fillRect(x,y,1,1);
+                // ctx.fillRect(x,y,1,1);
             }
         }
         this.bleLocationHandler()
