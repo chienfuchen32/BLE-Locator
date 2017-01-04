@@ -33,13 +33,13 @@ export default class Map_Setup extends React.Component {
                         display: "inline-block",
                     }
                 },
-                ble_stations:[]//ble stations object{bd_addr:"",x:1,y:1,name:""} location versus canvas_style width,height
+                ble_stations:[]//ble stations object{bd_addr:"",name:"",x:1,y:1} location versus canvas_style width,height
             },
             data: {
                 area: {width:50,height:50,meters_unit:1},
                 ble_stations:[
-                    {bd_addr:"00:1A:7D:DA:71:07",x:30,y:25,name:"raspberry pi1"},
-                    {bd_addr:"00:1A:7D:DA:71:08",x:10,y:15,name:"raspberry pi2"}
+                    {bd_addr:"00:1A:7D:DA:71:07",name:"raspberry pi1",x:30,y:25},
+                    {bd_addr:"00:1A:7D:DA:71:08",name:"raspberry pi2",x:10,y:15}
                 ]
             },
             image: null
@@ -123,9 +123,9 @@ export default class Map_Setup extends React.Component {
             let y = ble_statsions_data[i].y/area.height*canvas_style.height - img.height/2;
             ble_stations_ui[ble_stations_ui.length] = {
                 bd_addr: ble_statsions_data[i].bd_addr,
+                name: ble_statsions_data[i].name,
                 x: x,
-                y: y,
-                name: ble_statsions_data[i].name
+                y: y
             }
         }
         const ui = {

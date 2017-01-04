@@ -81,8 +81,8 @@ export default class Locator extends React.Component {
             data: {
                 area: {width:50,height:50,meters_unit:1},
                 ble_stations:[
-                    {bd_addr:"00:1A:7D:DA:71:07",x:30,y:25,name:"raspberry pi1"},
-                    {bd_addr:"00:1A:7D:DA:71:08",x:10,y:15,name:"raspberry pi2"}
+                    {bd_addr:"00:1A:7D:DA:71:07",name:"raspberry pi1",x:30,y:25},
+                    {bd_addr:"00:1A:7D:DA:71:08",name:"raspberry pi2",x:10,y:15}
                 ],//ble station object => {bd_addr:"",name:"",x,y}
                 ble_devices:[
                     {bd_addr:"bd_addr1",distance:[{s_bd_addr:"00:1A:7D:DA:71:07",distance:4}],locations:[]},
