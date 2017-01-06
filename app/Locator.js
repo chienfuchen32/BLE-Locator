@@ -76,7 +76,7 @@ export default class Locator extends React.Component {
                         display: "inline-block",
                     }
                 },
-                ble_devices:[]//type1 {bd_addr:"",color:"",distance:[{pos:"",size:""}]}, type2 {bd_addr:"",color:"",locations:[{x:x,y:y},...]}
+                ble_devices:[]//type1 {bd_addr:"",color:"",distance:[{pos:"",size:""}],locations:[]}, type2 {bd_addr:"",color:"",distances:[],locations:[{x:x,y:y},...]}, type3 {bd_addr:"",color:"",distances:[],locations:[]}
             },
             data: {
                 area: {width:50,height:50,meters_unit:1},
@@ -87,7 +87,7 @@ export default class Locator extends React.Component {
                 ble_devices:[
                     {bd_addr:"bd_addr1",distance:[{s_bd_addr:"00:1A:7D:DA:71:07",distance:4}],locations:[]},
                     {bd_addr:"bd_addr2",distance:[{s_bd_addr:"00:1A:7D:DA:71:07",distance:10}],locations:[]}
-                ],//ble device location object => type1 {bd_addr:"",distance:[{s_bd_addr:"",distance:d},...]}, type2 {bd_addr:"",locations[{x:x,y:y},...]}
+                ],//ble device location object => type1 {bd_addr:"",distance:[{s_bd_addr:"",distance:d},...],locations:[]}, type2 {bd_addr:"",distances:[],locations[{x:x,y:y},...]}, type3 {bd_addr:"",distances:[],locations:[]}
             }
          }
          this.bleLocationHandler = this.bleLocationHandler.bind(this);
