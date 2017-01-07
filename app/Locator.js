@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Image as Image_semantic } from 'semantic-ui-react';
-
-
+import io from 'socket.io-client';
 class Ble_Device extends React.Component {
     constructor(props) {
         super(props);
@@ -99,6 +98,12 @@ export default class Locator extends React.Component {
         //socket.io: get ble_devices and setState of data.ble_devices
     }
     componentDidMount() {
+        // var socket = io('http://localhost:3000');
+        // socket.emit('chat message', 'hi')
+        // socket.on('chat message', function (data) {
+        //     console.log(data);
+        //     // socket.emit('chat message', { my: 'data' });
+        // });
         this.updateCanvas();
         // window.addEventListener("resize", this.updateDimensions);
     }
@@ -159,7 +164,8 @@ export default class Locator extends React.Component {
         const canvas_height = this.refs.canvas.height;
         const ctx = this.refs.canvas.getContext('2d');
         var img = new window.Image();
-        img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+        // img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+        img.src = 'http://localhost:3000/assets/raspberry-white.png';
         // img.src = 'static/raspberry-white.png';
         img.onload = function(){
             let img_wigth = img.width;

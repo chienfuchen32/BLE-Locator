@@ -14,7 +14,9 @@ export default class MenuExampleSecondaryPointing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'map setup' 
+      
+      
+      activeItem: 'ble locator' 
     }
   }
   handleItemClick(name){ 

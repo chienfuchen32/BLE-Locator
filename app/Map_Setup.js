@@ -55,7 +55,8 @@ export default class Map_Setup extends React.Component {
         let thisss = this;
         // img.src = 'static/raspberry-white.png';
         let img_staion = new window.Image();
-        img_staion.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+        // img_staion.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
+        img_staion.src = 'http://localhost:3000/assets/raspberry-white.png';
         img_staion.onload = function(){
             // thisss.setState({
             //     image: img
