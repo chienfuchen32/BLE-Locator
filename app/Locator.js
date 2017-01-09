@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Image as Image_semantic } from 'semantic-ui-react';
 import io from 'socket.io-client';
+
 class Ble_Device extends React.Component {
     constructor(props) {
         super(props);
@@ -87,9 +88,24 @@ export default class Locator extends React.Component {
                     {bd_addr:"bd_addr1",distance:[{s_bd_addr:"00:1A:7D:DA:71:07",distance:4}],locations:[]},
                     {bd_addr:"bd_addr2",distance:[{s_bd_addr:"00:1A:7D:DA:71:07",distance:10}],locations:[]}
                 ],//ble device location object => type1 {bd_addr:"",distance:[{s_bd_addr:"",distance:d},...],locations:[]}, type2 {bd_addr:"",distances:[],locations[{x:x,y:y},...]}, type3 {bd_addr:"",distances:[],locations:[]}
-            }
+            },
+            color_table: [//https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool
+                'rgba(191,63,63,0.5)',
+                'rgba(191,106,63,0.5)',
+                'rgba(191,148,63,0.5)',
+                'rgba(191,191,63,0.5)',
+                'rgba(129,191,63,0.5)',
+                'rgba(80,191,63,0.5)',
+                'rgba(63,191,106,0.5)',
+                'rgba(63,180,191,0.5)',
+                'rgba(63,129,191,0.5)',
+                'rgba(63,72,191,0.5)',
+                'rgba(114,63,191,0.5)',
+                'rgba(176,63,191,0.5)',
+                'rgba(191,63,121,0.5)'
+            ]
          }
-         this.bleLocationHandler = this.bleLocationHandler.bind(this);
+        //  this.bleLocationHandler = this.bleLocationHandler.bind(this);
          this.updateCanvas = this.updateCanvas.bind(this);
          this.updateDimensions = this.updateDimensions.bind(this);
     }
@@ -98,48 +114,71 @@ export default class Locator extends React.Component {
         //socket.io: get ble_devices and setState of data.ble_devices
     }
     componentDidMount() {
-        // var socket = io('http://localhost:3000');
-        // socket.emit('chat message', 'hi')
-        // socket.on('chat message', function (data) {
-        //     console.log(data);
-        //     // socket.emit('chat message', { my: 'data' });
-        // });
+        let this_component = this;
+        var socket = io('http://localhost:3000');
+        socket.emit('chat message', 'hi')
+        socket.on('chat message', function (ble_devices) {
+            console.log(ble_devices.length);
+            const data = {
+                    area: this_component.state.data.area,
+                    ble_stations: this_component.state.data.ble_stations,
+                    ble_devices: ble_devices,
+                }
+            let ui = this_component.bleLocationHandler(ble_devices);
+            // console.log('ui')
+            // console.warn(ui);
+            // console.log('data');
+            // console.error(data);
+            this_component.setState({ui:ui, data: data});
+            // socket.emit('chat message', { my: 'data' });
+        });
         this.updateCanvas();
         // window.addEventListener("resize", this.updateDimensions);
     }
     componentWillUnmount() {
         // window.removeEventListener("resize", this.updateDimensions);
     }
-    bleLocationHandler(){
+    componentDidUpdate(){
+        // this.bleLocationHandler();
+    }
+    bleLocationHandler(ble_devices_data){
+        let color_table = this.state.color_table;
         let area = this.state.data.area;
         let ble_statsions_data = this.state.data.ble_stations;
-        let ble_devices_data = this.state.data.ble_devices;
+        // let ble_devices_data = this.state.data.ble_devices;
         let ble_devices_ui = [];
+        let count_color_table = 0;
         for(let i = 0; i < ble_devices_data.length; i++){
             if(ble_devices_data[i].distance.length!=0){//type1
                 let Is_ble_devices_bd_addr_Existed = false;
                 for(let j = 0; j < ble_devices_data[i].distance.length; j++){
                     for(let k = 0; k < ble_statsions_data.length; k++){
                         if(ble_devices_data[i].distance[j].s_bd_addr == ble_statsions_data[k].bd_addr){
-                            let width_size = ble_devices_data[i].distance[j].distance/area.meters_unit/area.width*100;
-                            let height_size = ble_devices_data[i].distance[j].distance/area.meters_unit/area.height*100;
-                            let x_pos = ble_statsions_data[k].x/area.width*100 - width_size/2;
-                            let y_pos = ble_statsions_data[k].y/area.height*100 - height_size/2;
-                            let ble_devices_ui_distance = {
-                                pos: { left: x_pos + "%", top: y_pos + "%" },
-                                size: { width: width_size + "%", height: height_size + "%" }
-                            };
-                            if(Is_ble_devices_bd_addr_Existed){
-                                ble_devices_ui[ble_devices_ui.length].distance.push(ble_devices_ui_distance);
-                            }
-                            else{
-                                ble_devices_ui[ble_devices_ui.length] = {
-                                    bd_addr: ble_devices_data[i].bd_addr,
-                                    color: "rgba(255,0,0,0.3)",
-                                    distance: [ble_devices_ui_distance],
-                                    locations: []
+                            if((ble_devices_data[i].distance[j].distance!='')&&(ble_devices_data[i].distance[j].distance<area.width)){
+                                let width_size = ble_devices_data[i].distance[j].distance/area.meters_unit/area.width*100;
+                                let height_size = ble_devices_data[i].distance[j].distance/area.meters_unit/area.height*100;
+                                let x_pos = ble_statsions_data[k].x/area.width*100 - width_size/2;
+                                let y_pos = ble_statsions_data[k].y/area.height*100 - height_size/2;
+                                let ble_devices_ui_distance = {
+                                    pos: { left: x_pos + "%", top: y_pos + "%" },
+                                    size: { width: width_size + "%", height: height_size + "%" }
+                                };
+                                if(Is_ble_devices_bd_addr_Existed){
+                                    ble_devices_ui[ble_devices_ui.length].distance.push(ble_devices_ui_distance);
                                 }
-                                Is_ble_devices_bd_addr_Existed = true;
+                                else{
+                                    ble_devices_ui[ble_devices_ui.length] = {
+                                        bd_addr: ble_devices_data[i].bd_addr,
+                                        color: color_table[count_color_table],
+                                        distance: [ble_devices_ui_distance],
+                                        locations: []
+                                    }
+                                    count_color_table++;
+                                    if(count_color_table == color_table.length){
+                                        count_color_table = 0;
+                                    }
+                                    Is_ble_devices_bd_addr_Existed = true;
+                                }
                             }
                         }
                     }
@@ -154,9 +193,10 @@ export default class Locator extends React.Component {
                 main_grid: this.state.ui.main_grid,
                 ble_devices: ble_devices_ui,
             }
-        this.setState({ui: ui});
+        return ui;
     }
     updateCanvas() {
+        let this_component = this;
         let area = this.state.data.area;
         let ble_stations = this.state.data.ble_stations;
 
@@ -176,8 +216,9 @@ export default class Locator extends React.Component {
                 ctx.drawImage(img,x-img_wigth/2,y-img_height/2);//,img_wigth/canvas_style_init.width*canvas_width,img_height/canvas_style_init.height*canvas_height
                 // ctx.fillRect(x,y,1,1);
             }
+            let ui = this_component.bleLocationHandler(this_component);
+            this_component.setState({ui: ui});
         }
-        this.bleLocationHandler()
     }
     updateDimensions() {
         // const ui = {
@@ -190,7 +231,7 @@ export default class Locator extends React.Component {
         //     }
         // this.setState({ui: ui});
         // this.forceUpdate();
-        console.log(this.state);
+        // console.log(this.state);
     }
     render() {
         const div_style = {

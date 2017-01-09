@@ -14,12 +14,10 @@ export default class MenuExampleSecondaryPointing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
-      
-      activeItem: 'ble locator' 
+      activeItem: 'ble locator'
     }
   }
-  handleItemClick(name){ 
+  handleItemClick(name){
     this.setState({ activeItem: name })
   }
   render() {
