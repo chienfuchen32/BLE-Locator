@@ -113,7 +113,7 @@
 	    var _this = _possibleConstructorReturn(this, (MenuExampleSecondaryPointing.__proto__ || Object.getPrototypeOf(MenuExampleSecondaryPointing)).call(this, props));
 
 	    _this.state = {
-	      activeItem: 'ble locator'
+	      activeItem: 'ble list'
 	    };
 	    return _this;
 	  }
@@ -56026,6 +56026,9 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	// var socket = io('http://localhost:3000');
+	var socket = (0, _socket2.default)('http://10.100.82.52:3000');
+
 	var Ble_Device = function (_React$Component) {
 	    _inherits(Ble_Device, _React$Component);
 
@@ -56055,7 +56058,7 @@
 	    function Ble_Devices(props) {
 	        _classCallCheck(this, Ble_Devices);
 
-	        return _possibleConstructorReturn(this, (Ble_Devices.__proto__ || Object.getPrototypeOf(Ble_Devices)).call(this, props)); //ble_devices:[]//type1 {bd_addr:"",color:"",distance:[{pos:"",size:""}]}, type2 {bd_addr:"",color:"",locations:[{x:x,y:y},...]}
+	        return _possibleConstructorReturn(this, (Ble_Devices.__proto__ || Object.getPrototypeOf(Ble_Devices)).call(this, props)); //ble_devices:[]//type1 {bd_addr:'',color:'',distance:[{pos:'',size:''}]}, type2 {bd_addr:'',color:'',locations:[{x:x,y:y},...]}
 	    }
 
 	    _createClass(Ble_Devices, [{
@@ -56107,33 +56110,35 @@
 	                },
 	                main_grid: {
 	                    part1: {
-	                        width: 1 / 16 * 100 + "%",
-	                        display: "inline-block"
+	                        width: 1 / 16 * 100 + '%',
+	                        display: 'inline-block'
 	                    },
 	                    part2: {
-	                        width: 10 / 16 * 100 + "%",
-	                        display: "inline-block",
-	                        position: "relative",
-	                        top: "0",
-	                        left: "0"
+	                        width: 10 / 16 * 100 + '%',
+	                        display: 'inline-block',
+	                        position: 'relative',
+	                        top: '0',
+	                        left: '0'
 	                    },
 	                    part3: {
-	                        width: 1 / 16 * 100 + "%",
-	                        display: "inline-block"
+	                        width: 1 / 16 * 100 + '%',
+	                        display: 'inline-block'
 	                    },
 	                    part4: {
-	                        width: 3 / 16 * 100 + "%",
-	                        display: "inline-block"
+	                        width: 3 / 16 * 100 + '%',
+	                        display: 'inline-block'
 	                    }
 	                },
-	                ble_devices: [] //type1 {bd_addr:"",color:"",distance:[{pos:"",size:""}],locations:[]}, type2 {bd_addr:"",color:"",distances:[],locations:[{x:x,y:y},...]}, type3 {bd_addr:"",color:"",distances:[],locations:[]}
+	                ble_devices: [] //type1 {bd_addr:'',color:'',distance:[{pos:'',size:''}],locations:[]}, type2 {bd_addr:'',color:'',distances:[],locations:[{x:x,y:y},...]}, type3 {bd_addr:'',color:'',distances:[],locations:[]}
 	            },
 	            data: {
 	                area: { width: 50, height: 50, meters_unit: 1 },
-	                ble_stations: [{ bd_addr: "00:1A:7D:DA:71:07", name: "raspberry pi1", x: 30, y: 25 }, { bd_addr: "00:1A:7D:DA:71:08", name: "raspberry pi2", x: 10, y: 15 }], //ble station object => {bd_addr:"",name:"",x,y}
-	                ble_devices: [{ bd_addr: "bd_addr1", distance: [{ s_bd_addr: "00:1A:7D:DA:71:07", distance: 4 }], locations: [] }, { bd_addr: "bd_addr2", distance: [{ s_bd_addr: "00:1A:7D:DA:71:07", distance: 10 }], locations: [] }] }
+	                ble_stations: [{ bd_addr: '00:1A:7D:DA:71:07', name: 'raspberry pi1', x: 30, y: 25 }], //ble station object => {bd_addr:'',name:'',x,y}
+	                ble_devices: [{ bd_addr: 'bd_addr1', addr_type: '', type: '', company: '', name: '', ble_stations: [], distance: [{ s_bd_addr: '00:1A:7D:DA:71:07', distance: 4 }], locations: [] }, { bd_addr: 'bd_addr2', addr_type: '', type: '', company: '', name: '', ble_stations: [], distance: [{ s_bd_addr: '00:1A:7D:DA:71:07', distance: 10 }], locations: [] }] },
+	            color_table: [//https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool
+	            'rgba(191,63,63,0.5)', 'rgba(191,106,63,0.5)', 'rgba(191,148,63,0.5)', 'rgba(191,191,63,0.5)', 'rgba(129,191,63,0.5)', 'rgba(80,191,63,0.5)', 'rgba(63,191,106,0.5)', 'rgba(63,180,191,0.5)', 'rgba(63,129,191,0.5)', 'rgba(63,72,191,0.5)', 'rgba(114,63,191,0.5)', 'rgba(176,63,191,0.5)', 'rgba(191,63,121,0.5)']
 	        };
-	        _this3.bleLocationHandler = _this3.bleLocationHandler.bind(_this3);
+	        //  this.bleLocationHandler = this.bleLocationHandler.bind(this);
 	        _this3.updateCanvas = _this3.updateCanvas.bind(_this3);
 	        _this3.updateDimensions = _this3.updateDimensions.bind(_this3);
 	        return _this3;
@@ -56142,33 +56147,60 @@
 	    _createClass(Locator, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
+	            // console.log('WillMount');
 	            //http: get ble_stations and setState of data.ble_stations
 	            //socket.io: get ble_devices and setState of data.ble_devices
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            // var socket = io('http://localhost:3000');
+	            // console.log('DidMount');
+	            var this_component = this;
 	            // socket.emit('chat message', 'hi')
-	            // socket.on('chat message', function (data) {
-	            //     console.log(data);
-	            //     // socket.emit('chat message', { my: 'data' });
-	            // });
+	            socket.on('ble_locator', function (ble_devices) {
+	                this_component.socketHandler(ble_devices);
+	            });
 	            this.updateCanvas();
-	            // window.addEventListener("resize", this.updateDimensions);
+	            // window.addEventListener('resize', this.updateDimensions);
+	        }
+	    }, {
+	        key: 'socketHandler',
+	        value: function socketHandler(ble_devices) {
+	            console.log(ble_devices);
+	            var data = {
+	                area: this.state.data.area,
+	                ble_stations: this.state.data.ble_stations,
+	                ble_devices: ble_devices
+	            };
+	            var ui = this.bleLocationHandler(ble_devices);
+	            // console.log('ui')
+	            // console.warn(ui);
+	            // console.log('data');
+	            // console.error(data);
+	            this.setState({ ui: ui, data: data });
+	            // socket.emit('chat message', { my: 'data' });
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
-	            // window.removeEventListener("resize", this.updateDimensions);
+	            // console.log('WillUnmont');
+	            socket.removeListener('ble_locator');
+	            // window.removeEventListener('resize', this.updateDimensions);
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            // this.bleLocationHandler();
 	        }
 	    }, {
 	        key: 'bleLocationHandler',
-	        value: function bleLocationHandler() {
+	        value: function bleLocationHandler(ble_devices_data) {
+	            var color_table = this.state.color_table;
 	            var area = this.state.data.area;
 	            var ble_statsions_data = this.state.data.ble_stations;
-	            var ble_devices_data = this.state.data.ble_devices;
+	            // let ble_devices_data = this.state.data.ble_devices;
 	            var ble_devices_ui = [];
+	            var count_color_table = 0;
 	            for (var i = 0; i < ble_devices_data.length; i++) {
 	                if (ble_devices_data[i].distance.length != 0) {
 	                    //type1
@@ -56176,24 +56208,30 @@
 	                    for (var j = 0; j < ble_devices_data[i].distance.length; j++) {
 	                        for (var k = 0; k < ble_statsions_data.length; k++) {
 	                            if (ble_devices_data[i].distance[j].s_bd_addr == ble_statsions_data[k].bd_addr) {
-	                                var width_size = ble_devices_data[i].distance[j].distance / area.meters_unit / area.width * 100;
-	                                var height_size = ble_devices_data[i].distance[j].distance / area.meters_unit / area.height * 100;
-	                                var x_pos = ble_statsions_data[k].x / area.width * 100 - width_size / 2;
-	                                var y_pos = ble_statsions_data[k].y / area.height * 100 - height_size / 2;
-	                                var ble_devices_ui_distance = {
-	                                    pos: { left: x_pos + "%", top: y_pos + "%" },
-	                                    size: { width: width_size + "%", height: height_size + "%" }
-	                                };
-	                                if (Is_ble_devices_bd_addr_Existed) {
-	                                    ble_devices_ui[ble_devices_ui.length].distance.push(ble_devices_ui_distance);
-	                                } else {
-	                                    ble_devices_ui[ble_devices_ui.length] = {
-	                                        bd_addr: ble_devices_data[i].bd_addr,
-	                                        color: "rgba(255,0,0,0.3)",
-	                                        distance: [ble_devices_ui_distance],
-	                                        locations: []
+	                                if (ble_devices_data[i].distance[j].distance != '' && ble_devices_data[i].distance[j].distance < area.width) {
+	                                    var width_size = ble_devices_data[i].distance[j].distance / area.meters_unit / area.width * 100;
+	                                    var height_size = ble_devices_data[i].distance[j].distance / area.meters_unit / area.height * 100;
+	                                    var x_pos = ble_statsions_data[k].x / area.width * 100 - width_size / 2;
+	                                    var y_pos = ble_statsions_data[k].y / area.height * 100 - height_size / 2;
+	                                    var ble_devices_ui_distance = {
+	                                        pos: { left: x_pos + '%', top: y_pos + '%' },
+	                                        size: { width: width_size + '%', height: height_size + '%' }
 	                                    };
-	                                    Is_ble_devices_bd_addr_Existed = true;
+	                                    if (Is_ble_devices_bd_addr_Existed) {
+	                                        ble_devices_ui[ble_devices_ui.length].distance.push(ble_devices_ui_distance);
+	                                    } else {
+	                                        ble_devices_ui[ble_devices_ui.length] = {
+	                                            bd_addr: ble_devices_data[i].bd_addr,
+	                                            color: color_table[count_color_table],
+	                                            distance: [ble_devices_ui_distance],
+	                                            locations: []
+	                                        };
+	                                        count_color_table++;
+	                                        if (count_color_table == color_table.length) {
+	                                            count_color_table = 0;
+	                                        }
+	                                        Is_ble_devices_bd_addr_Existed = true;
+	                                    }
 	                                }
 	                            }
 	                        }
@@ -56208,11 +56246,12 @@
 	                main_grid: this.state.ui.main_grid,
 	                ble_devices: ble_devices_ui
 	            };
-	            this.setState({ ui: ui });
+	            return ui;
 	        }
 	    }, {
 	        key: 'updateCanvas',
 	        value: function updateCanvas() {
+	            var this_component = this;
 	            var area = this.state.data.area;
 	            var ble_stations = this.state.data.ble_stations;
 
@@ -56221,7 +56260,8 @@
 	            var ctx = this.refs.canvas.getContext('2d');
 	            var img = new window.Image();
 	            // img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
-	            img.src = 'http://localhost:3000/assets/raspberry-white.png';
+	            img.src = 'http://10.100.82.52:3000/assets/raspberry-white.png';
+	            // img.src = 'http://localhost:3000/assets/raspberry-white.png';
 	            // img.src = 'static/raspberry-white.png';
 	            img.onload = function () {
 	                var img_wigth = img.width;
@@ -56232,8 +56272,9 @@
 	                    ctx.drawImage(img, x - img_wigth / 2, y - img_height / 2); //,img_wigth/canvas_style_init.width*canvas_width,img_height/canvas_style_init.height*canvas_height
 	                    // ctx.fillRect(x,y,1,1);
 	                }
+	                var ui = this_component.bleLocationHandler(this_component);
+	                this_component.setState({ ui: ui });
 	            };
-	            this.bleLocationHandler();
 	        }
 	    }, {
 	        key: 'updateDimensions',
@@ -56248,29 +56289,83 @@
 	            //     }
 	            // this.setState({ui: ui});
 	            // this.forceUpdate();
-	            console.log(this.state);
+	            // console.log(this.state);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var div_style = {
-	                position: "absolute",
-	                top: "0",
-	                right: "0",
-	                width: "100%",
-	                paddingTop: "100%", /* 1:1 Aspect Ratio */
-	                // zIndex: "-1",
-	                backgroundColor: "darkgrey" };
+	                position: 'absolute',
+	                top: '0',
+	                right: '0',
+	                width: '100%',
+	                paddingTop: '100%', /* 1:1 Aspect Ratio */
+	                // zIndex: '-1',
+	                backgroundColor: '#ADD8E6' };
 	            var canvas_style = {
-	                position: "absolute",
-	                top: "0",
-	                left: "0",
-	                right: "0",
-	                bottom: "0",
-	                zIndex: "0",
-	                width: "100%",
-	                height: "100%" };
-	            var ss100 = { display: "block" };
+	                position: 'absolute',
+	                top: '0',
+	                left: '0',
+	                right: '0',
+	                bottom: '0',
+	                zIndex: '0',
+	                width: '100%',
+	                height: '100%' };
+	            var list_style = {
+	                position: 'absolute',
+	                width: '20%',
+	                height: '87%',
+	                overflowY: 'scroll' };
+	            var ss100 = { display: 'block' };
+
+	            var ble_devices_list = null;
+	            var ble_devices = this.state.data.ble_devices;
+	            var key_ble_devices_list = 0;
+	            var key_ble_devices_stations = 0;
+	            if (ble_devices.length != 0) {
+	                ble_devices_list = [];
+	                for (var i = 0; i < ble_devices.length; i++) {
+	                    var ble_devices_stations = null;
+	                    if (ble_devices[i].ble_stations.length != 0) {
+	                        ble_devices_stations = [];
+	                        for (var j = 0; j < ble_devices[i].ble_stations.length; j++) {
+	                            ble_devices_stations.push(_react2.default.createElement(
+	                                _semanticUiReact.List.Description,
+	                                { as: 'a', key: 'stations' + key_ble_devices_stations + '0' },
+	                                _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'feed', size: 'small' }),
+	                                'tx: ' + ble_devices[i].ble_stations[j].tx_power + ', rssi: ' + ble_devices[i].ble_stations[j].rssi
+	                            ), _react2.default.createElement(
+	                                _semanticUiReact.List.Description,
+	                                { as: 'a', key: 'stations' + key_ble_devices_stations + '1' },
+	                                ble_devices[i].ble_stations[j].datetime
+	                            ));
+	                            key_ble_devices_stations++;
+	                        }
+	                    }
+	                    ble_devices_list.push(_react2.default.createElement(
+	                        _semanticUiReact.List.Item,
+	                        { key: key_ble_devices_list },
+	                        _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative', size: 'large', verticalAlign: 'middle' }),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.List.Content,
+	                            null,
+	                            _react2.default.createElement(
+	                                _semanticUiReact.List.Header,
+	                                { as: 'a' },
+	                                ble_devices[i].bd_addr + '  [' + ble_devices[i].addr_type + ']'
+	                            ),
+	                            _react2.default.createElement(
+	                                _semanticUiReact.List.Description,
+	                                { as: 'a' },
+	                                ble_devices[i].company + '   ' + ble_devices[i].type + '   ' + ble_devices[i].name
+	                            ),
+	                            ble_devices_stations
+	                        )
+	                    ));
+	                    key_ble_devices_list++;
+	                }
+	            }
+
 	            return _react2.default.createElement(
 	                'div',
 	                { style: ss100 },
@@ -56290,11 +56385,14 @@
 	                    'div',
 	                    { style: this.state.ui.main_grid.part4 },
 	                    _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        'test'
-	                    ),
-	                    _react2.default.createElement(_semanticUiReact.Image, { src: 'http://semantic-ui.com/images/wireframe/media-paragraph.png' })
+	                        'div',
+	                        { style: list_style },
+	                        _react2.default.createElement(
+	                            _semanticUiReact.List,
+	                            { divided: true, relaxed: true },
+	                            ble_devices_list
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -64707,30 +64805,30 @@
 	                },
 	                main_grid: {
 	                    part1: {
-	                        width: 1 / 16 * 100 + "%",
-	                        display: "inline-block"
+	                        width: 1 / 16 * 100 + '%',
+	                        display: 'inline-block'
 	                    },
 	                    part2: {
-	                        width: 10 / 16 * 100 + "%",
-	                        display: "inline-block",
-	                        position: "relative",
-	                        top: "0",
-	                        left: "0"
+	                        width: 10 / 16 * 100 + '%',
+	                        display: 'inline-block',
+	                        position: 'relative',
+	                        top: '0',
+	                        left: '0'
 	                    },
 	                    part3: {
-	                        width: 1 / 16 * 100 + "%",
-	                        display: "inline-block"
+	                        width: 1 / 16 * 100 + '%',
+	                        display: 'inline-block'
 	                    },
 	                    part4: {
-	                        width: 3 / 16 * 100 + "%",
-	                        display: "inline-block"
+	                        width: 3 / 16 * 100 + '%',
+	                        display: 'inline-block'
 	                    }
 	                },
-	                ble_stations: [] //ble stations object{bd_addr:"",name:"",x:1,y:1} location versus canvas_style width,height
+	                ble_stations: [] //ble stations object{bd_addr:'',name:'',x:1,y:1} location versus canvas_style width,height
 	            },
 	            data: {
 	                area: { width: 50, height: 50, meters_unit: 1 },
-	                ble_stations: [{ bd_addr: "00:1A:7D:DA:71:07", name: "raspberry pi1", x: 30, y: 25 }, { bd_addr: "00:1A:7D:DA:71:08", name: "raspberry pi2", x: 10, y: 15 }]
+	                ble_stations: [{ bd_addr: '00:1A:7D:DA:71:07', name: 'raspberry pi1', x: 30, y: 25 }]
 	            },
 	            image: null
 	        };
@@ -64752,7 +64850,8 @@
 	            // img.src = 'static/raspberry-white.png';
 	            var img_staion = new window.Image();
 	            // img_staion.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
-	            img_staion.src = 'http://localhost:3000/assets/raspberry-white.png';
+	            img_staion.src = 'http://10.100.82.52:3000/assets/raspberry-white.png';
+	            // img_staion.src = 'http://localhost:3000/assets/raspberry-white.png';
 	            img_staion.onload = function () {
 	                // thisss.setState({
 	                //     image: img
@@ -64762,12 +64861,12 @@
 	                thisss.bleStationHandler(img_staion);
 	            };
 	            this.updateCanvas();
-	            // window.addEventListener("resize", this.updateDimensions);
+	            // window.addEventListener('resize', this.updateDimensions);
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
-	            // window.removeEventListener("resize", this.updateDimensions);
+	            // window.removeEventListener('resize', this.updateDimensions);
 	        }
 	    }, {
 	        key: 'updateCanvas',
@@ -64846,7 +64945,7 @@
 	        key: 'onDragHandler',
 	        value: function onDragHandler(id) {
 	            // console.log(this.refs[id])
-	            // console.log( + "," + this.refs[id].attrs.y)
+	            // console.log( + ',' + this.refs[id].attrs.y)
 	            // console.log(this.state.ui.ble_stations)
 	            var this_ref = this.refs[id];
 	            var canvas_style = this.state.ui.canvas_style;
@@ -64905,54 +65004,54 @@
 	        key: 'render',
 	        value: function render() {
 	            var div_style = {
-	                position: "absolute",
-	                top: "0",
-	                right: "0",
-	                width: "100%",
-	                paddingTop: "100%", /* 1:1 Aspect Ratio */
-	                // zIndex: "-1",
-	                backgroundColor: "darkgrey"
+	                position: 'absolute',
+	                top: '0',
+	                right: '0',
+	                width: '100%',
+	                paddingTop: '100%', /* 1:1 Aspect Ratio */
+	                // zIndex: '-1',
+	                backgroundColor: '#ADD8E6'
 	            };
 	            var div_style21 = {
-	                position: "absolute",
-	                top: "0",
-	                // right: "0",
-	                left: "0",
-	                // bottom: "0",
-	                zIndex: "0",
-	                // width: "100%",
-	                // paddingTop: "100%", /* 1:1 Aspect Ratio */
-	                backgroundColor: "darkgrey"
+	                position: 'absolute',
+	                top: '0',
+	                // right: '0',
+	                left: '0',
+	                // bottom: '0',
+	                zIndex: '0',
+	                // width: '100%',
+	                // paddingTop: '100%', /* 1:1 Aspect Ratio */
+	                backgroundColor: '#ADD8E6'
 	            };
 	            var div_style1 = {
-	                position: "absolute",
-	                top: "0",
-	                left: "0",
-	                zIndex: "1"
+	                position: 'absolute',
+	                top: '0',
+	                left: '0',
+	                zIndex: '1'
 	            };
 	            var div_style22 = {
-	                position: "absolute",
-	                top: "0",
-	                left: "0",
-	                // width: "100%",
-	                zIndex: "2"
+	                position: 'absolute',
+	                top: '0',
+	                left: '0',
+	                // width: '100%',
+	                zIndex: '2'
 	            };
 	            var div_style4 = {
-	                position: "absolute"
+	                position: 'absolute'
 	            };
 	            var canvas_style = {
-	                position: "absolute",
-	                top: "0",
-	                left: "0",
-	                right: "0",
-	                bottom: "0",
-	                zIndex: "0",
-	                width: "100%",
-	                height: "100%" };
-	            var ss100 = { display: "block" };
+	                position: 'absolute',
+	                top: '0',
+	                left: '0',
+	                right: '0',
+	                bottom: '0',
+	                zIndex: '0',
+	                width: '100%',
+	                height: '100%' };
+	            var ss100 = { display: 'block' };
 
 	            //img of canvas& list
-	            var list_style = { marginBottom: "10px", marginLeft: "0" };
+	            var list_style = { marginBottom: '10px', marginLeft: '0' };
 	            var ble_station_canvas = null;
 	            var ble_station_list = [];
 	            var ble_stations_ui = this.state.ui.ble_stations;
@@ -64962,7 +65061,7 @@
 	                ble_station_canvas = [];
 	                for (var i = 0; i < ble_stations_ui.length; i++) {
 	                    ble_station_canvas.push(_react2.default.createElement(_reactKonva.Image, {
-	                        key: "img" + key_id,
+	                        key: 'img' + key_id,
 	                        ref: ble_stations_ui[i].bd_addr,
 	                        draggable: 'true',
 	                        x: ble_stations_ui[i].x,
@@ -64973,8 +65072,8 @@
 	                    }));
 	                    ble_station_list.push(_react2.default.createElement(
 	                        _semanticUiReact.Label,
-	                        { color: 'blue', key: "list" + key_id, style: list_style },
-	                        _react2.default.createElement(_semanticUiReact.Icon, { name: 'bluetooth alternative' }),
+	                        { color: 'blue', key: 'list' + key_id, style: list_style },
+	                        _react2.default.createElement(_semanticUiReact.Icon, { name: 'feed' }),
 	                        ble_stations_data[i].name,
 	                        _react2.default.createElement(
 	                            _semanticUiReact.Label.Detail,
@@ -65002,13 +65101,13 @@
 	            }
 	            ble_station_list.push(_react2.default.createElement(
 	                _semanticUiReact.Header,
-	                { key: "header" + key_id, as: 'h4', color: 'blue' },
+	                { key: 'header' + key_id, as: 'h4', color: 'blue' },
 	                _react2.default.createElement(_semanticUiReact.Icon, { name: 'plus' }),
 	                'add new station'
 	            ));
 	            ble_station_list.push(_react2.default.createElement(
 	                _semanticUiReact.Button,
-	                { key: "button" + key_id, basic: true, color: 'blue', type: 'submit' },
+	                { key: 'button' + key_id, basic: true, color: 'blue', type: 'submit' },
 	                'Submit'
 	            ));
 	            return _react2.default.createElement(
@@ -81887,6 +81986,10 @@
 
 	var _semanticUiReact = __webpack_require__(179);
 
+	var _socket = __webpack_require__(713);
+
+	var _socket2 = _interopRequireDefault(_socket);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -81894,6 +81997,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// var socket = io('http://localhost:3000');
+	var socket = (0, _socket2.default)('http://10.100.82.52:3000');
 
 	var BLE_List = function (_React$Component) {
 	    _inherits(BLE_List, _React$Component);
@@ -81903,14 +82009,125 @@
 
 	        var _this = _possibleConstructorReturn(this, (BLE_List.__proto__ || Object.getPrototypeOf(BLE_List)).call(this, props));
 
-	        _this.state = {};
+	        _this.state = {
+	            data: {
+	                ble_station: { s_bd_addr: '' },
+	                ble_devices: []
+	            }
+	        };
 	        return _this;
 	    }
 
 	    _createClass(BLE_List, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var this_component = this;
+	            socket.on('ble_devices', function (ble_devices) {
+	                console.log(ble_devices);
+	                this_component.socketHandler(ble_devices);
+	            });
+	        }
+	    }, {
+	        key: 'socketHandler',
+	        value: function socketHandler(ble_devices) {
+	            var data = {
+	                ble_station: { s_bd_addr: ble_devices[0].s_bd_addr },
+	                ble_devices: ble_devices[0].bles
+	            };
+	            this.setState({ data: data });
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            socket.removeListener('ble_devices');
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var color = 'orange';
+	            var ble_list = null;
+	            var ble_devices = this.state.data.ble_devices;
+	            var key_row_ble_list = 0;
+	            var col_per_row = 4;
+	            if (ble_devices.length != 0) {
+	                ble_list = [];
+	                for (var i = 0; i < ble_devices.length; i = i + col_per_row) {
+	                    var ble_list_row = [null, null, null, null];
+	                    for (var j = 0; j < col_per_row; j++) {
+	                        if (i + j < ble_devices.length) {
+	                            ble_list_row[j] = _react2.default.createElement(
+	                                _semanticUiReact.Grid.Column,
+	                                { key: 'row' + i + 'col' + j },
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Segment,
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.List,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _semanticUiReact.List.Item,
+	                                            null,
+	                                            _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative', size: 'large', verticalAlign: 'middle' }),
+	                                            _react2.default.createElement(
+	                                                _semanticUiReact.List.Content,
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Header,
+	                                                    { as: 'a' },
+	                                                    ble_devices[i + j].bd_addr + '  [' + ble_devices[i + j].addr_type + ']'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    ble_devices[i + j].company + '   ' + ble_devices[i + j].type + '   ' + ble_devices[i + j].name
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    { as: 'a' },
+	                                                    _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'feed', size: 'small' }),
+	                                                    'tx: ' + ble_devices[i + j].tx_power + ', rssi: ' + ble_devices[i + j].rssi
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    { as: 'a' },
+	                                                    ble_devices[i + j].datetime
+	                                                )
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            );
+	                        }
+	                    }
+	                    ble_list.push(_react2.default.createElement(
+	                        _semanticUiReact.Grid.Row,
+	                        { key: 'row' + key_row_ble_list },
+	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { key: 'row' + key_row_ble_list + '0', width: 2 }),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Grid.Column,
+	                            { key: 'row' + key_row_ble_list + '1', width: 3 },
+	                            ble_list_row[0]
+	                        ),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Grid.Column,
+	                            { key: 'row' + key_row_ble_list + '2', width: 3 },
+	                            ble_list_row[1]
+	                        ),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Grid.Column,
+	                            { key: 'row' + key_row_ble_list + '3', width: 3 },
+	                            ble_list_row[2]
+	                        ),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Grid.Column,
+	                            { key: 'row' + key_row_ble_list + '4', width: 3 },
+	                            ble_list_row[3]
+	                        ),
+	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { key: 'row' + key_row_ble_list + '5', width: 2 })
+	                    ));
+	                    key_row_ble_list++;
+	                }
+	            }
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -81923,96 +82140,17 @@
 	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 2 }),
 	                        _react2.default.createElement(
 	                            _semanticUiReact.Grid.Column,
-	                            { width: 3 },
+	                            { width: 12 },
 	                            _react2.default.createElement(
-	                                _semanticUiReact.Grid.Column,
-	                                null,
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Segment,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.List,
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.List.Item,
-	                                            null,
-	                                            _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative' }),
-	                                            _react2.default.createElement(
-	                                                _semanticUiReact.List.Content,
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Header,
-	                                                    { as: 'a' },
-	                                                    'device1'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Description,
-	                                                    null,
-	                                                    'user1'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Description,
-	                                                    null,
-	                                                    'bd_addr1'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Description,
-	                                                    null,
-	                                                    '2016-12-29 08:24:58'
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Grid.Column,
-	                            { width: 3 },
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Grid.Column,
-	                                null,
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Segment,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.List,
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.List.Item,
-	                                            null,
-	                                            _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative' }),
-	                                            _react2.default.createElement(
-	                                                _semanticUiReact.List.Content,
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Header,
-	                                                    { as: 'a' },
-	                                                    'device2'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Description,
-	                                                    null,
-	                                                    'user2'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Description,
-	                                                    null,
-	                                                    'bd_addr2'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _semanticUiReact.List.Description,
-	                                                    null,
-	                                                    '2016-12-30 15:34:00'
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
+	                                _semanticUiReact.Segment,
+	                                { inverted: true, color: 'blue', secondary: true },
+	                                'ble station: ',
+	                                this.state.data.ble_station.s_bd_addr
 	                            )
 	                        ),
 	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 2 })
-	                    )
+	                    ),
+	                    ble_list
 	                )
 	            );
 	        }

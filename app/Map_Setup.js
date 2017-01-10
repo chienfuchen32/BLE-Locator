@@ -14,32 +14,32 @@ export default class Map_Setup extends React.Component {
                 },
                 main_grid:{
                     part1:{
-                        width: 1 / 16 * 100 + "%",
-                        display: "inline-block",
+                        width: 1 / 16 * 100 + '%',
+                        display: 'inline-block',
                     },
                     part2:{
-                        width: 10 / 16 * 100 + "%",
-                        display: "inline-block",
-                        position: "relative",
-                        top: "0",
-                        left: "0"
+                        width: 10 / 16 * 100 + '%',
+                        display: 'inline-block',
+                        position: 'relative',
+                        top: '0',
+                        left: '0'
                     },
                     part3:{
-                        width: 1 / 16 * 100 + "%",
-                        display: "inline-block",
+                        width: 1 / 16 * 100 + '%',
+                        display: 'inline-block',
                     },
                     part4:{
-                        width: 3 / 16 * 100 + "%",
-                        display: "inline-block",
+                        width: 3 / 16 * 100 + '%',
+                        display: 'inline-block',
                     }
                 },
-                ble_stations:[]//ble stations object{bd_addr:"",name:"",x:1,y:1} location versus canvas_style width,height
+                ble_stations:[]//ble stations object{bd_addr:'',name:'',x:1,y:1} location versus canvas_style width,height
             },
             data: {
                 area: {width:50,height:50,meters_unit:1},
                 ble_stations:[
-                    {bd_addr:"00:1A:7D:DA:71:07",name:"raspberry pi1",x:30,y:25},
-                    {bd_addr:"00:1A:7D:DA:71:08",name:"raspberry pi2",x:10,y:15}
+                    {bd_addr:'00:1A:7D:DA:71:07',name:'raspberry pi1',x:30,y:25},
+                    // {bd_addr:'00:1A:7D:DA:71:08',name:'raspberry pi2',x:10,y:15}
                 ]
             },
             image: null
@@ -56,7 +56,8 @@ export default class Map_Setup extends React.Component {
         // img.src = 'static/raspberry-white.png';
         let img_staion = new window.Image();
         // img_staion.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
-        img_staion.src = 'http://localhost:3000/assets/raspberry-white.png';
+        img_staion.src = 'http://10.100.82.52:3000/assets/raspberry-white.png';
+        // img_staion.src = 'http://localhost:3000/assets/raspberry-white.png';
         img_staion.onload = function(){
             // thisss.setState({
             //     image: img
@@ -66,10 +67,10 @@ export default class Map_Setup extends React.Component {
             thisss.bleStationHandler(img_staion);
         }
         this.updateCanvas();
-        // window.addEventListener("resize", this.updateDimensions);
+        // window.addEventListener('resize', this.updateDimensions);
     }
     componentWillUnmount() {
-        // window.removeEventListener("resize", this.updateDimensions);
+        // window.removeEventListener('resize', this.updateDimensions);
     }
     updateCanvas() {
         // let area = this.state.data.area;
@@ -138,7 +139,7 @@ export default class Map_Setup extends React.Component {
     }
     onDragHandler(id) {
         // console.log(this.refs[id])
-        // console.log( + "," + this.refs[id].attrs.y)
+        // console.log( + ',' + this.refs[id].attrs.y)
         // console.log(this.state.ui.ble_stations)
         let this_ref = this.refs[id];
         let canvas_style = this.state.ui.canvas_style;
@@ -179,55 +180,55 @@ export default class Map_Setup extends React.Component {
     }
     render() {
         const div_style = {
-            position: "absolute",
-            top: "0",
-            right: "0",
-            width: "100%",
-            paddingTop: "100%", /* 1:1 Aspect Ratio */
-            // zIndex: "-1",
-            backgroundColor: "darkgrey"
+            position: 'absolute',
+            top: '0',
+            right: '0',
+            width: '100%',
+            paddingTop: '100%', /* 1:1 Aspect Ratio */
+            // zIndex: '-1',
+            backgroundColor: '#ADD8E6'
         }
         const div_style21 = {
-            position: "absolute",
-            top: "0",
-            // right: "0",
-            left: "0",
-            // bottom: "0",
-            zIndex: "0",
-            // width: "100%",
-            // paddingTop: "100%", /* 1:1 Aspect Ratio */
-            backgroundColor: "darkgrey"
+            position: 'absolute',
+            top: '0',
+            // right: '0',
+            left: '0',
+            // bottom: '0',
+            zIndex: '0',
+            // width: '100%',
+            // paddingTop: '100%', /* 1:1 Aspect Ratio */
+            backgroundColor: '#ADD8E6'
         }
         const div_style1 = {
-            position: "absolute",
-            top: "0",
-            left: "0",
-            zIndex: "1",
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            zIndex: '1',
         }
         const div_style22 = {
-            position: "absolute",
-            top: "0",
-            left: "0",
-            // width: "100%",
-            zIndex: "2"
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            // width: '100%',
+            zIndex: '2'
         }
         const div_style4 = {
-            position: "absolute",
-            // marginTop: "5px"
+            position: 'absolute',
+            // marginTop: '5px'
         }
         const canvas_style = {
-            position: "absolute",
-            top: "0",
-            left: "0",
-            right: "0",
-            bottom: "0",
-            zIndex: "0",
-            width: "100%",
-            height: "100%"}
-        const ss100 = {display:"block"}
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            zIndex: '0',
+            width: '100%',
+            height: '100%'}
+        const ss100 = {display:'block'}
 
         //img of canvas& list
-        const list_style = { marginBottom: "10px", marginLeft: "0" }
+        const list_style = { marginBottom: '10px', marginLeft: '0' }
         let ble_station_canvas = null;
         let ble_station_list = [];
         let ble_stations_ui = this.state.ui.ble_stations;
@@ -237,17 +238,17 @@ export default class Map_Setup extends React.Component {
             ble_station_canvas = [];
             for(let i = 0; i < ble_stations_ui.length; i++){
                 ble_station_canvas.push(<Image_reactkonva
-                                            key={"img" + key_id}
+                                            key={'img' + key_id}
                                             ref={ble_stations_ui[i].bd_addr}
-                                            draggable="true"
+                                            draggable='true'
                                             x={ble_stations_ui[i].x}
                                             y={ble_stations_ui[i].y}
                                             image={this.state.image}
                                             onDragEnd={this.onDragHandler.bind(this,ble_stations_ui[i].bd_addr)}
                                             // onDragStart={this.onDragHandler.bind(this,ble_stations_ui[i].bd_addr)}
                                         />);
-                ble_station_list.push(<Label color='blue' key={"list" + key_id} style={list_style}>
-                                        <Icon name='bluetooth alternative' />
+                ble_station_list.push(<Label color='blue' key={'list' + key_id} style={list_style}>
+                                        <Icon name='feed' />
                                         {ble_stations_data[i].name}
                                         <Label.Detail>{ble_stations_data[i].bd_addr}</Label.Detail>
                                         <Label.Detail>{ble_stations_data[i].x.toString()}</Label.Detail>
@@ -257,8 +258,8 @@ export default class Map_Setup extends React.Component {
                 key_id++;
             }
         }
-        ble_station_list.push(<Header key={"header" + key_id} as='h4' color='blue'><Icon name='plus' />add new station</Header>);
-        ble_station_list.push(<Button key={"button" + key_id} basic color='blue' type='submit'>Submit</Button>);
+        ble_station_list.push(<Header key={'header' + key_id} as='h4' color='blue'><Icon name='plus' />add new station</Header>);
+        ble_station_list.push(<Button key={'button' + key_id} basic color='blue' type='submit'>Submit</Button>);
         return (
             <div style={ss100}>
                 <div style={this.state.ui.main_grid.part1}></div>
@@ -268,11 +269,11 @@ export default class Map_Setup extends React.Component {
                             {ble_station_canvas}
                             <Group style={div_style22}>
                                 {/*<Rect
-                                    ref="rect"
-                                    width="50"
-                                    height="50"
-                                    fill="green"
-                                    draggable="true"
+                                    ref='rect'
+                                    width='50'
+                                    height='50'
+                                    fill='green'
+                                    draggable='true'
                                     onDragEnd={this.changeSize.bind(this)}
                                     onDragStart={this.changeSize.bind(this)}
                                 />*/}
@@ -280,7 +281,7 @@ export default class Map_Setup extends React.Component {
                         </Layer>
                     </Stage>
                     {/*<div ref='container' style={div_style}>
-                        <canvas ref="canvas" width={} height={this.state.ui.canvas_style.height} style={canvas_style}></canvas>
+                        <canvas ref='canvas' width={} height={this.state.ui.canvas_style.height} style={canvas_style}></canvas>
                     </div>*/}
                 </div>
                 <div style={this.state.ui.main_grid.part3}></div>
