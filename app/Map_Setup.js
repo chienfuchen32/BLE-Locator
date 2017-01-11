@@ -130,11 +130,8 @@ export default class Map_Setup extends React.Component {
                 y: y
             }
         }
-        const ui = {
-                canvas_style: this.state.ui.canvas_style,
-                main_grid: this.state.ui.main_grid,
-                ble_stations: ble_stations_ui,
-            }
+        const ui = this.state.ui;
+        ui.ble_stations = ble_stations_ui;
         this.setState({ui: ui,image: img});
     }
     onDragHandler(id) {
@@ -166,16 +163,11 @@ export default class Map_Setup extends React.Component {
             if(ble_stations_ui[i].y<0){ble_stations_ui[i].y=0;}
             if(ble_stations_ui[i].y>canvas_style.height-1){ble_stations_ui[i].y=canvas_style.height-img_staion_attr.height/2;}
         }
-        const ui = {
-                canvas_style: this.state.ui.canvas_style,
-                main_grid: this.state.ui.main_grid,
-                ble_stations: ble_stations_ui,
-            }
-        const data = {
-                area: this.state.data.area,
-                ble_stations:ble_stations_data
-            }
-        console.log({ui: ui, data: data})
+        const ui = this.state.ui;
+        ui.ble_stations = ble_stations_ui;
+        const data = this.state.data;
+        data.ble_stations = ble_stations_data;
+        // console.log({ui: ui, data: data})
         this.setState({ui: ui, data: data});
     }
     render() {
@@ -247,7 +239,7 @@ export default class Map_Setup extends React.Component {
                                             onDragEnd={this.onDragHandler.bind(this,ble_stations_ui[i].bd_addr)}
                                             // onDragStart={this.onDragHandler.bind(this,ble_stations_ui[i].bd_addr)}
                                         />);
-                ble_station_list.push(<Label color='blue' key={'list' + key_id} style={list_style}>
+                ble_station_list.push(<Label color='teal' key={'list' + key_id} style={list_style}>
                                         <Icon name='feed' />
                                         {ble_stations_data[i].name}
                                         <Label.Detail>{ble_stations_data[i].bd_addr}</Label.Detail>
@@ -258,8 +250,8 @@ export default class Map_Setup extends React.Component {
                 key_id++;
             }
         }
-        ble_station_list.push(<Header key={'header' + key_id} as='h4' color='blue'><Icon name='plus' />add new station</Header>);
-        ble_station_list.push(<Button key={'button' + key_id} basic color='blue' type='submit'>Submit</Button>);
+        ble_station_list.push(<Header key={'header' + key_id} as='h4' color='teal'><Icon name='plus' />add new station</Header>);
+        ble_station_list.push(<Button key={'button' + key_id} basic color='teal' type='submit'>Submit</Button>);
         return (
             <div style={ss100}>
                 <div style={this.state.ui.main_grid.part1}></div>

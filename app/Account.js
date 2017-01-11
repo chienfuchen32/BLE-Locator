@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button, Checkbox, Form, Input, Message, Radio, Select, TextArea } from 'semantic-ui-react'
+import { Grid, Button, Checkbox, Form, Input, Message, Radio, Select, TextArea } from 'semantic-ui-react';
 export default class Account extends React.Component {
     constructor(props) {
         super(props);

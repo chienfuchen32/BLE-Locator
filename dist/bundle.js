@@ -155,7 +155,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _semanticUiReact.Menu,
-	          { pointing: true, secondary: true, color: 'blue' },
+	          { pointing: true, secondary: true, color: 'blue', size: 'large' },
 	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE locator', active: this.state.activeItem === 'ble locator', onClick: this.handleItemClick.bind(this, 'ble locator') }),
 	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'map setup', active: this.state.activeItem === 'map setup', onClick: this.handleItemClick.bind(this, 'map setup') }),
 	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE list', active: this.state.activeItem === 'ble list', onClick: this.handleItemClick.bind(this, 'ble list') }),
@@ -65072,7 +65072,7 @@
 	                    }));
 	                    ble_station_list.push(_react2.default.createElement(
 	                        _semanticUiReact.Label,
-	                        { color: 'blue', key: 'list' + key_id, style: list_style },
+	                        { color: 'teal', key: 'list' + key_id, style: list_style },
 	                        _react2.default.createElement(_semanticUiReact.Icon, { name: 'feed' }),
 	                        ble_stations_data[i].name,
 	                        _react2.default.createElement(
@@ -65101,13 +65101,13 @@
 	            }
 	            ble_station_list.push(_react2.default.createElement(
 	                _semanticUiReact.Header,
-	                { key: 'header' + key_id, as: 'h4', color: 'blue' },
+	                { key: 'header' + key_id, as: 'h4', color: 'teal' },
 	                _react2.default.createElement(_semanticUiReact.Icon, { name: 'plus' }),
 	                'add new station'
 	            ));
 	            ble_station_list.push(_react2.default.createElement(
 	                _semanticUiReact.Button,
-	                { key: 'button' + key_id, basic: true, color: 'blue', type: 'submit' },
+	                { key: 'button' + key_id, basic: true, color: 'teal', type: 'submit' },
 	                'Submit'
 	            ));
 	            return _react2.default.createElement(
@@ -82010,6 +82010,23 @@
 	        var _this = _possibleConstructorReturn(this, (BLE_List.__proto__ || Object.getPrototypeOf(BLE_List)).call(this, props));
 
 	        _this.state = {
+	            ui: {
+	                search: {
+	                    type: 'company'
+	                },
+	                modal: {
+	                    open: false,
+	                    ble_device: {
+	                        bd_addr: '',
+	                        addr_type: '',
+	                        type: '',
+	                        company: '',
+	                        name: '',
+	                        u_id: '',
+	                        u_name: ''
+	                    }
+	                }
+	            },
 	            data: {
 	                ble_station: { s_bd_addr: '' },
 	                ble_devices: []
@@ -82019,6 +82036,28 @@
 	    }
 
 	    _createClass(BLE_List, [{
+	        key: 'handleItemClick',
+	        value: function handleItemClick(type) {
+	            this.setState({ ui: { search: { type: type }, modal: this.state.ui.modal } });
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show(ble_device) {
+	            var ble_device_modal = {
+	                bd_addr: ble_device.bd_addr,
+	                addr_type: ble_device.addr_type,
+	                type: ble_device.type,
+	                company: ble_device.company,
+	                name: ble_device.name
+	            };
+	            this.setState({ ui: { search: this.state.ui.search, modal: { open: true, ble_device: ble_device_modal } } });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ ui: { search: this.state.ui.search, modal: { open: false, ble_device: this.state.ui.modal.ble_device } } });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var this_component = this;
@@ -82045,6 +82084,7 @@
 	        key: 'render',
 	        value: function render() {
 	            var color = 'orange';
+	            var u_id = [{ text: 'account1', value: 'account1' }, { text: 'account2', value: 'account2' }];
 	            var ble_list = null;
 	            var ble_devices = this.state.data.ble_devices;
 	            var key_row_ble_list = 0;
@@ -82060,7 +82100,7 @@
 	                                { key: 'row' + i + 'col' + j },
 	                                _react2.default.createElement(
 	                                    _semanticUiReact.Segment,
-	                                    null,
+	                                    { onClick: this.show.bind(this, ble_devices[i + j]) },
 	                                    _react2.default.createElement(
 	                                        _semanticUiReact.List,
 	                                        null,
@@ -82142,15 +82182,85 @@
 	                            _semanticUiReact.Grid.Column,
 	                            { width: 12 },
 	                            _react2.default.createElement(
-	                                _semanticUiReact.Segment,
-	                                { inverted: true, color: 'blue', secondary: true },
-	                                'ble station: ',
-	                                this.state.data.ble_station.s_bd_addr
+	                                _semanticUiReact.Menu,
+	                                { secondary: true, size: 'small' },
+	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'company', active: this.state.ui.search.type === 'company', onClick: this.handleItemClick.bind(this, 'company') }),
+	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'type', active: this.state.ui.search.type === 'type', onClick: this.handleItemClick.bind(this, 'type') }),
+	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'name', active: this.state.ui.search.type === 'name', onClick: this.handleItemClick.bind(this, 'name') }),
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Menu.Item,
+	                                    null,
+	                                    _react2.default.createElement(_semanticUiReact.Search, null)
+	                                ),
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Menu.Item,
+	                                    { position: 'right' },
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.Segment,
+	                                        { secondary: true, inverted: true, color: 'teal', size: 'tiny' },
+	                                        'BLE Station Address: ',
+	                                        this.state.data.ble_station.s_bd_addr
+	                                    )
+	                                )
 	                            )
 	                        ),
 	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 2 })
 	                    ),
 	                    ble_list
+	                ),
+	                _react2.default.createElement(
+	                    _semanticUiReact.Modal,
+	                    { open: this.state.ui.modal.open, onClose: this.close.bind(this) },
+	                    _react2.default.createElement(
+	                        _semanticUiReact.Modal.Header,
+	                        null,
+	                        'Register BLE Device'
+	                    ),
+	                    _react2.default.createElement(
+	                        _semanticUiReact.Modal.Content,
+	                        { image: true },
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Modal.Description,
+	                            null,
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Header,
+	                                null,
+	                                'Address: ' + this.state.ui.modal.ble_device.bd_addr + '  [' + this.state.ui.modal.ble_device.addr_type + ']'
+	                            ),
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Header,
+	                                { as: 'h4' },
+	                                'Company: ' + this.state.ui.modal.ble_device.company
+	                            ),
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Header,
+	                                { as: 'h4' },
+	                                'Type: ' + this.state.ui.modal.ble_device.type
+	                            ),
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Header,
+	                                { as: 'h4' },
+	                                'Name: ' + this.state.ui.modal.ble_device.name
+	                            ),
+	                            _react2.default.createElement(
+	                                _semanticUiReact.Header,
+	                                { as: 'h4' },
+	                                'Link Account: ',
+	                                _react2.default.createElement(_semanticUiReact.Select, { placeholder: 'user_id', options: u_id }),
+	                                _react2.default.createElement(_semanticUiReact.Input, { placeholder: 'user name', value: '' })
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _semanticUiReact.Modal.Actions,
+	                        null,
+	                        _react2.default.createElement(_semanticUiReact.Button, { positive: true, icon: 'checkmark', labelPosition: 'right', content: 'Confirm', onClick: this.close.bind(this) }),
+	                        _react2.default.createElement(
+	                            _semanticUiReact.Button,
+	                            { onClick: this.close.bind(this) },
+	                            'cancel'
+	                        )
+	                    )
 	                )
 	            );
 	        }

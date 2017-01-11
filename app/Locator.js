@@ -126,12 +126,9 @@ export default class Locator extends React.Component {
         // window.addEventListener('resize', this.updateDimensions);
     }
     socketHandler(ble_devices){
-        console.log(ble_devices);
-        const data = {
-                area: this.state.data.area,
-                ble_stations: this.state.data.ble_stations,
-                ble_devices: ble_devices,
-            }
+        // console.log(ble_devices);
+        const data = this.state.data;
+        data.ble_devices = ble_devices;
         let ui = this.bleLocationHandler(ble_devices);
         // console.log('ui')
         // console.warn(ui);
@@ -195,11 +192,8 @@ export default class Locator extends React.Component {
                 //undefined
             }
         }
-        const ui = {
-                canvas_style: this.state.ui.canvas_style,
-                main_grid: this.state.ui.main_grid,
-                ble_devices: ble_devices_ui,
-            }
+        const ui = this.state.ui;
+        ui.ble_devices = ble_devices_ui;
         return ui;
     }
     updateCanvas() {
@@ -295,7 +289,6 @@ export default class Locator extends React.Component {
                 key_ble_devices_list++;
             }
         }
-
         return (
             <div style={ss100}>
                 <div style={this.state.ui.main_grid.part1}></div>
