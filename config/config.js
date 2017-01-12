@@ -1,6 +1,6 @@
 var api = {
     dev:{
-        host: "localhost",
+        host: "10.100.82.52",
         port: "3000"
     }
 }

@@ -48,13 +48,13 @@ export default class MenuExampleSecondaryPointing extends React.Component {
     return (
       <div>
         <Menu pointing secondary color={'blue'} size='large'>
-          <Menu.Item name='BLE locator' active={this.state.activeItem === 'ble locator'} onClick={this.itemOnClickHandler.bind(this, 'ble locator')} />
-          <Menu.Item name='map setup' active={this.state.activeItem === 'map setup'} onClick={this.itemOnClickHandler.bind(this, 'map setup')} />
-          <Menu.Item name='BLE list' active={this.state.activeItem === 'ble list'} onClick={this.itemOnClickHandler.bind(this, 'ble list')} />
+          <Menu.Item name='BLE locator' active={this.state.activeItem === 'ble locator'} onClick={()=>this.itemOnClickHandler('ble locator')} />
+          <Menu.Item name='map setup' active={this.state.activeItem === 'map setup'} onClick={()=>this.itemOnClickHandler('map setup')} />
+          <Menu.Item name='BLE list' active={this.state.activeItem === 'ble list'} onClick={()=>this.itemOnClickHandler('ble list')} />
           {/*<Menu.Menu position='right'>
-            <Menu.Item name='account' active={this.state.activeItem === 'account'} onClick={this.itemOnClickHandler.bind(this, 'account')} />
-            <Menu.Item name='login' active={this.state.activeItem === 'login'} onClick={this.itemOnClickHandler.bind(this, 'login')} />
-            <Menu.Item name='logout' active={this.state.activeItem === 'logout'} onClick={this.itemOnClickHandler.bind(this, 'logout')} />
+            <Menu.Item name='account' active={this.state.activeItem === 'account'} onClick={()=>this.itemOnClickHandler('account')} />
+            <Menu.Item name='login' active={this.state.activeItem === 'login'} onClick={()=>this.itemOnClickHandler('login')} />
+            <Menu.Item name='logout' active={this.state.activeItem === 'logout'} onClick={()=>this.itemOnClickHandler('logout')} />
           </Menu.Menu>*/}
         </Menu>
         {main}

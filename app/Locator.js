@@ -1,8 +1,9 @@
 import React from 'react';
 import { Grid, Image as Image_semantic, List } from 'semantic-ui-react';
 import io from 'socket.io-client';
+import config from '../config/config.js';
 // var socket = io('http://localhost:3000');
-var socket = io('http://10.100.82.52:3000');
+var socket = io('http://' + config.api.dev.host + ':' + config.api.dev.port);
 class Ble_Device extends React.Component {
     constructor(props) {
         super(props);
@@ -206,7 +207,7 @@ export default class Locator extends React.Component {
         const ctx = this.refs.canvas.getContext('2d');
         var img = new window.Image();
         // img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
-        img.src = 'http://10.100.82.52:3000/assets/raspberry-white.png';
+        img.src = 'http://' + config.api.dev.host + ':' + config.api.dev.port + '/assets/raspberry-white.png';
         // img.src = 'http://localhost:3000/assets/raspberry-white.png';
         // img.src = 'static/raspberry-white.png';
         img.onload = function(){

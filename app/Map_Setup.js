@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Image as Image_semantic, Icon, Label, Header, Button } from 'semantic-ui-react';
 import { Layer, Rect, Stage, Group, Image as Image_reactkonva} from 'react-konva';
+import config from '../config/config.js';
 
 let img_staion_attr = {width:0,height:0}
 export default class Map_Setup extends React.Component {
@@ -56,7 +57,7 @@ export default class Map_Setup extends React.Component {
         // img.src = 'static/raspberry-white.png';
         let img_staion = new window.Image();
         // img_staion.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
-        img_staion.src = 'http://10.100.82.52:3000/assets/raspberry-white.png';
+        img_staion.src = 'http://' + config.api.dev.host + ':' + config.api.dev.port + '/assets/raspberry-white.png';
         // img_staion.src = 'http://localhost:3000/assets/raspberry-white.png';
         img_staion.onload = function(){
             // thisss.setState({
@@ -132,7 +133,7 @@ export default class Map_Setup extends React.Component {
         }
         const ui = this.state.ui;
         ui.ble_stations = ble_stations_ui;
-        this.setState({ui: ui,image: img});
+        this.setState({ui: ui, image: img});
     }
     onDragHandler(id) {
         // console.log(this.refs[id])
@@ -236,7 +237,7 @@ export default class Map_Setup extends React.Component {
                                             x={ble_stations_ui[i].x}
                                             y={ble_stations_ui[i].y}
                                             image={this.state.image}
-                                            onDragEnd={this.onDragHandler.bind(this,ble_stations_ui[i].bd_addr)}
+                                            onDragEnd={()=>this.onDragHandler(ble_stations_ui[i].bd_addr)}
                                             // onDragStart={this.onDragHandler.bind(this,ble_stations_ui[i].bd_addr)}
                                         />);
                 ble_station_list.push(<Label color='teal' key={'list' + key_id} style={list_style}>

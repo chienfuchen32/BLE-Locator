@@ -75,23 +75,23 @@
 
 	var _Locator2 = _interopRequireDefault(_Locator);
 
-	var _Map_Setup = __webpack_require__(763);
+	var _Map_Setup = __webpack_require__(764);
 
 	var _Map_Setup2 = _interopRequireDefault(_Map_Setup);
 
-	var _BLE_List = __webpack_require__(768);
+	var _BLE_List = __webpack_require__(769);
 
 	var _BLE_List2 = _interopRequireDefault(_BLE_List);
 
-	var _Account = __webpack_require__(769);
+	var _Account = __webpack_require__(795);
 
 	var _Account2 = _interopRequireDefault(_Account);
 
-	var _Login = __webpack_require__(770);
+	var _Login = __webpack_require__(796);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Logout = __webpack_require__(771);
+	var _Logout = __webpack_require__(797);
 
 	var _Logout2 = _interopRequireDefault(_Logout);
 
@@ -119,13 +119,15 @@
 	  }
 
 	  _createClass(MenuExampleSecondaryPointing, [{
-	    key: 'handleItemClick',
-	    value: function handleItemClick(name) {
+	    key: 'itemOnClickHandler',
+	    value: function itemOnClickHandler(name) {
 	      this.setState({ activeItem: name });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      var main = null;
 	      switch (this.state.activeItem) {
 	        case "ble locator":
@@ -156,16 +158,15 @@
 	        _react2.default.createElement(
 	          _semanticUiReact.Menu,
 	          { pointing: true, secondary: true, color: 'blue', size: 'large' },
-	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE locator', active: this.state.activeItem === 'ble locator', onClick: this.handleItemClick.bind(this, 'ble locator') }),
-	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'map setup', active: this.state.activeItem === 'map setup', onClick: this.handleItemClick.bind(this, 'map setup') }),
-	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE list', active: this.state.activeItem === 'ble list', onClick: this.handleItemClick.bind(this, 'ble list') }),
-	          _react2.default.createElement(
-	            _semanticUiReact.Menu.Menu,
-	            { position: 'right' },
-	            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'account', active: this.state.activeItem === 'account', onClick: this.handleItemClick.bind(this, 'account') }),
-	            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'login', active: this.state.activeItem === 'login', onClick: this.handleItemClick.bind(this, 'login') }),
-	            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'logout', active: this.state.activeItem === 'logout', onClick: this.handleItemClick.bind(this, 'logout') })
-	          )
+	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE locator', active: this.state.activeItem === 'ble locator', onClick: function onClick() {
+	              return _this2.itemOnClickHandler('ble locator');
+	            } }),
+	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'map setup', active: this.state.activeItem === 'map setup', onClick: function onClick() {
+	              return _this2.itemOnClickHandler('map setup');
+	            } }),
+	          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'BLE list', active: this.state.activeItem === 'ble list', onClick: function onClick() {
+	              return _this2.itemOnClickHandler('ble list');
+	            } })
 	        ),
 	        main
 	      );
@@ -56018,6 +56019,10 @@
 
 	var _socket2 = _interopRequireDefault(_socket);
 
+	var _config = __webpack_require__(763);
+
+	var _config2 = _interopRequireDefault(_config);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56027,7 +56032,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// var socket = io('http://localhost:3000');
-	var socket = (0, _socket2.default)('http://10.100.82.52:3000');
+	var socket = (0, _socket2.default)('http://' + _config2.default.api.dev.host + ':' + _config2.default.api.dev.port);
 
 	var Ble_Device = function (_React$Component) {
 	    _inherits(Ble_Device, _React$Component);
@@ -56166,12 +56171,9 @@
 	    }, {
 	        key: 'socketHandler',
 	        value: function socketHandler(ble_devices) {
-	            console.log(ble_devices);
-	            var data = {
-	                area: this.state.data.area,
-	                ble_stations: this.state.data.ble_stations,
-	                ble_devices: ble_devices
-	            };
+	            // console.log(ble_devices);
+	            var data = this.state.data;
+	            data.ble_devices = ble_devices;
 	            var ui = this.bleLocationHandler(ble_devices);
 	            // console.log('ui')
 	            // console.warn(ui);
@@ -56241,11 +56243,8 @@
 	                    //undefined
 	                }
 	            }
-	            var ui = {
-	                canvas_style: this.state.ui.canvas_style,
-	                main_grid: this.state.ui.main_grid,
-	                ble_devices: ble_devices_ui
-	            };
+	            var ui = this.state.ui;
+	            ui.ble_devices = ble_devices_ui;
 	            return ui;
 	        }
 	    }, {
@@ -56260,7 +56259,7 @@
 	            var ctx = this.refs.canvas.getContext('2d');
 	            var img = new window.Image();
 	            // img.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
-	            img.src = 'http://10.100.82.52:3000/assets/raspberry-white.png';
+	            img.src = 'http://' + _config2.default.api.dev.host + ':' + _config2.default.api.dev.port + '/assets/raspberry-white.png';
 	            // img.src = 'http://localhost:3000/assets/raspberry-white.png';
 	            // img.src = 'static/raspberry-white.png';
 	            img.onload = function () {
@@ -56365,7 +56364,6 @@
 	                    key_ble_devices_list++;
 	                }
 	            }
-
 	            return _react2.default.createElement(
 	                'div',
 	                { style: ss100 },
@@ -64759,6 +64757,18 @@
 
 /***/ },
 /* 763 */
+/***/ function(module, exports) {
+
+	var api = {
+	    dev:{
+	        host: "10.100.82.52",
+	        port: "3000"
+	    }
+	}
+	module.exports = { api }
+
+/***/ },
+/* 764 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -64777,7 +64787,11 @@
 
 	var _semanticUiReact = __webpack_require__(179);
 
-	var _reactKonva = __webpack_require__(764);
+	var _reactKonva = __webpack_require__(765);
+
+	var _config = __webpack_require__(763);
+
+	var _config2 = _interopRequireDefault(_config);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64850,7 +64864,7 @@
 	            // img.src = 'static/raspberry-white.png';
 	            var img_staion = new window.Image();
 	            // img_staion.src = 'http://10.100.82.52:3207/ble/static/raspberry-white.png';
-	            img_staion.src = 'http://10.100.82.52:3000/assets/raspberry-white.png';
+	            img_staion.src = 'http://' + _config2.default.api.dev.host + ':' + _config2.default.api.dev.port + '/assets/raspberry-white.png';
 	            // img_staion.src = 'http://localhost:3000/assets/raspberry-white.png';
 	            img_staion.onload = function () {
 	                // thisss.setState({
@@ -64934,11 +64948,8 @@
 	                    y: y
 	                };
 	            }
-	            var ui = {
-	                canvas_style: this.state.ui.canvas_style,
-	                main_grid: this.state.ui.main_grid,
-	                ble_stations: ble_stations_ui
-	            };
+	            var ui = this.state.ui;
+	            ui.ble_stations = ble_stations_ui;
 	            this.setState({ ui: ui, image: img });
 	        }
 	    }, {
@@ -64988,21 +64999,18 @@
 	                    ble_stations_ui[i].y = canvas_style.height - img_staion_attr.height / 2;
 	                }
 	            }
-	            var ui = {
-	                canvas_style: this.state.ui.canvas_style,
-	                main_grid: this.state.ui.main_grid,
-	                ble_stations: ble_stations_ui
-	            };
-	            var data = {
-	                area: this.state.data.area,
-	                ble_stations: ble_stations_data
-	            };
-	            console.log({ ui: ui, data: data });
+	            var ui = this.state.ui;
+	            ui.ble_stations = ble_stations_ui;
+	            var data = this.state.data;
+	            data.ble_stations = ble_stations_data;
+	            // console.log({ui: ui, data: data})
 	            this.setState({ ui: ui, data: data });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            var div_style = {
 	                position: 'absolute',
 	                top: '0',
@@ -65059,15 +65067,18 @@
 	            var key_id = 0;
 	            if (ble_stations_ui.length != 0) {
 	                ble_station_canvas = [];
-	                for (var i = 0; i < ble_stations_ui.length; i++) {
+
+	                var _loop = function _loop(i) {
 	                    ble_station_canvas.push(_react2.default.createElement(_reactKonva.Image, {
 	                        key: 'img' + key_id,
 	                        ref: ble_stations_ui[i].bd_addr,
 	                        draggable: 'true',
 	                        x: ble_stations_ui[i].x,
 	                        y: ble_stations_ui[i].y,
-	                        image: this.state.image,
-	                        onDragEnd: this.onDragHandler.bind(this, ble_stations_ui[i].bd_addr)
+	                        image: _this2.state.image,
+	                        onDragEnd: function onDragEnd() {
+	                            return _this2.onDragHandler(ble_stations_ui[i].bd_addr);
+	                        }
 	                        // onDragStart={this.onDragHandler.bind(this,ble_stations_ui[i].bd_addr)}
 	                    }));
 	                    ble_station_list.push(_react2.default.createElement(
@@ -65097,6 +65108,10 @@
 	                        )
 	                    ));
 	                    key_id++;
+	                };
+
+	                for (var i = 0; i < ble_stations_ui.length; i++) {
+	                    _loop(i);
 	                }
 	            }
 	            ble_station_list.push(_react2.default.createElement(
@@ -65150,13 +65165,13 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Map_Setup.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 764 */
+/* 765 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Adapted from ReactART:
 	// https://github.com/reactjs/react-art
 
-	var Konva = __webpack_require__(765);
+	var Konva = __webpack_require__(766);
 	var React = __webpack_require__(88);
 
 	var ReactInstanceMap = __webpack_require__(116);
@@ -65560,7 +65575,7 @@
 
 
 /***/ },
-/* 765 */
+/* 766 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -65816,8 +65831,8 @@
 	            // Node. Does not work with strict CommonJS, but
 	            // only CommonJS-like enviroments that support module.exports,
 	            // like Node.
-	            var Canvas = __webpack_require__(766);
-	            var jsdom = __webpack_require__(767).jsdom;
+	            var Canvas = __webpack_require__(767);
+	            var jsdom = __webpack_require__(768).jsdom;
 
 	            Konva.window = jsdom('<!DOCTYPE html><html><head></head><body></body></html>').defaultView;
 	            Konva.document = Konva.window.document;
@@ -81955,12 +81970,6 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 766 */
-/***/ function(module, exports) {
-
-	/* (ignored) */
-
-/***/ },
 /* 767 */
 /***/ function(module, exports) {
 
@@ -81968,6 +81977,12 @@
 
 /***/ },
 /* 768 */
+/***/ function(module, exports) {
+
+	/* (ignored) */
+
+/***/ },
+/* 769 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -81986,6 +82001,14 @@
 
 	var _semanticUiReact = __webpack_require__(179);
 
+	var _config = __webpack_require__(763);
+
+	var _config2 = _interopRequireDefault(_config);
+
+	var _axios = __webpack_require__(770);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
 	var _socket = __webpack_require__(713);
 
 	var _socket2 = _interopRequireDefault(_socket);
@@ -81999,7 +82022,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// var socket = io('http://localhost:3000');
-	var socket = (0, _socket2.default)('http://10.100.82.52:3000');
+	var socket = (0, _socket2.default)('http://' + _config2.default.api.dev.host + ':' + _config2.default.api.dev.port);
 
 	var BLE_List = function (_React$Component) {
 	    _inherits(BLE_List, _React$Component);
@@ -82012,7 +82035,12 @@
 	        _this.state = {
 	            ui: {
 	                search: {
-	                    type: 'company'
+	                    type: 'name',
+	                    processing: false,
+	                    keyword: ''
+	                },
+	                result: {
+	                    ble_devices: []
 	                },
 	                modal: {
 	                    open: false,
@@ -82022,12 +82050,12 @@
 	                        type: '',
 	                        company: '',
 	                        name: '',
-	                        u_id: '',
-	                        u_name: ''
+	                        user_name: ''
 	                    }
 	                }
 	            },
 	            data: {
+	                ble_watch_lists: [],
 	                ble_station: { s_bd_addr: '' },
 	                ble_devices: []
 	            }
@@ -82036,43 +82064,151 @@
 	    }
 
 	    _createClass(BLE_List, [{
-	        key: 'handleItemClick',
-	        value: function handleItemClick(type) {
-	            this.setState({ ui: { search: { type: type }, modal: this.state.ui.modal } });
+	        key: 'modalUserOnChangeHandler',
+	        value: function modalUserOnChangeHandler(e) {
+	            var ui = this.state.ui;
+	            ui.modal.ble_device.user_name = e.target.value;
+	            this.setState({ ui: ui });
+	        }
+	    }, {
+	        key: 'bleDeviceRegisterHandler',
+	        value: function bleDeviceRegisterHandler() {
+	            var this_component = this;
+	            _axios2.default.post('http://' + _config2.default.api.dev.host + ':' + _config2.default.api.dev.port + '/ble_watch_list/edit', this_component.state.ui.modal.ble_device).then(function (response) {
+	                if (response.data.status == "OK") {
+	                    this_component.syncBleWatchList();
+	                    this_component.close();
+	                }
+	            }).catch(function (error) {
+	                this_component.close();
+	            });
+	        }
+	    }, {
+	        key: 'itemOnClickHandler',
+	        value: function itemOnClickHandler(type) {
+	            var ui = this.state.ui;
+	            ui.search.type = type;
+	            ui.search.processing = true;
+	            this.setState({ ui: ui });
+	        }
+	    }, {
+	        key: 'searchOnChangeHandler',
+	        value: function searchOnChangeHandler(e) {
+	            var ui = this.state.ui;
+	            ui.search.keyword = e.target.value;
+	            this.setState({ ui: ui });
 	        }
 	    }, {
 	        key: 'show',
 	        value: function show(ble_device) {
+	            var ui = this.state.ui;
 	            var ble_device_modal = {
 	                bd_addr: ble_device.bd_addr,
 	                addr_type: ble_device.addr_type,
 	                type: ble_device.type,
 	                company: ble_device.company,
-	                name: ble_device.name
+	                name: ble_device.name,
+	                user_name: ble_device.user_name
 	            };
-	            this.setState({ ui: { search: this.state.ui.search, modal: { open: true, ble_device: ble_device_modal } } });
+	            ui.modal = { open: true, ble_device: ble_device_modal };
+	            this.setState({ ui: ui });
 	        }
 	    }, {
 	        key: 'close',
 	        value: function close() {
-	            this.setState({ ui: { search: this.state.ui.search, modal: { open: false, ble_device: this.state.ui.modal.ble_device } } });
+	            var ui = this.state.ui;
+	            ui.modal = { open: false, ble_device: this.state.ui.modal.ble_device };
+	            this.setState({ ui: ui });
+	        }
+	    }, {
+	        key: 'syncBleWatchList',
+	        value: function syncBleWatchList() {
+	            var this_component = this;
+	            _axios2.default.post('http://' + _config2.default.api.dev.host + ':' + _config2.default.api.dev.port + '/ble_watch_list/find', {}).then(function (response) {
+	                if (response.data.status == "OK") {
+	                    var data = this_component.state.data;
+	                    data.ble_watch_lists = response.data.message;
+	                    this_component.setState({ data: data });
+	                }
+	            }).catch(function (error) {});
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var this_component = this;
+	            this.syncBleWatchList();
 	            socket.on('ble_devices', function (ble_devices) {
-	                console.log(ble_devices);
+	                // console.log(ble_devices)
 	                this_component.socketHandler(ble_devices);
 	            });
 	        }
 	    }, {
+	        key: 'componentWillUpdate',
+	        value: function componentWillUpdate(nextProps, nextState) {
+	            // console.log('componentWillUpdate')
+	            var ui = this.state.ui;
+	            var this_component = this;
+	            var ble_devices_resuit = [];
+	            var ble_devices_data = this.state.data.ble_devices;
+	            var search_type = this.state.ui.search.type;
+	            var search_keyword = this.state.ui.search.keyword.toLowerCase();
+	            for (var i = 0; i < ble_devices_data.length; i++) {
+	                if (search_keyword == '') {
+	                    if (search_type == 'user name') {
+	                        if (ble_devices_data[i].user_name != '') {
+	                            ble_devices_resuit.push(ble_devices_data[i]);
+	                        }
+	                    } else {
+	                        ble_devices_resuit.push(ble_devices_data[i]);
+	                    }
+	                } else {
+	                    switch (search_type) {
+	                        case 'address':
+	                            if (ble_devices_data[i].bd_addr.toLowerCase().indexOf(search_keyword) != -1) {
+	                                ble_devices_resuit.push(ble_devices_data[i]);
+	                            }
+	                            break;
+	                        case 'company':
+	                            if (ble_devices_data[i].company.toLowerCase().indexOf(search_keyword) != -1) {
+	                                ble_devices_resuit.push(ble_devices_data[i]);
+	                            }
+	                            break;
+	                        case 'type':
+	                            if (ble_devices_data[i].type.toLowerCase().indexOf(search_keyword) != -1) {
+	                                ble_devices_resuit.push(ble_devices_data[i]);
+	                            }
+	                            break;
+	                        case 'name':
+	                            if (ble_devices_data[i].name.toLowerCase().indexOf(search_keyword) != -1) {
+	                                ble_devices_resuit.push(ble_devices_data[i]);
+	                            }
+	                        case 'user name':
+	                            if (ble_devices_data[i].user_name.toLowerCase().indexOf(search_keyword) != -1) {
+	                                ble_devices_resuit.push(ble_devices_data[i]);
+	                            }
+	                            break;
+	                    }
+	                }
+	            }
+	            nextState.ui.search.processing = false;
+	            nextState.ui.result.ble_devices = ble_devices_resuit;
+	        }
+	    }, {
 	        key: 'socketHandler',
 	        value: function socketHandler(ble_devices) {
-	            var data = {
-	                ble_station: { s_bd_addr: ble_devices[0].s_bd_addr },
-	                ble_devices: ble_devices[0].bles
-	            };
+	            var ble_watch_lists = this.state.data.ble_watch_lists;
+	            var ble_devices_join_user_name = ble_devices[0].bles;
+	            for (var i = 0; i < ble_devices_join_user_name.length; i++) {
+	                ble_devices_join_user_name[i].user_name = '';
+	                for (var j = 0; j < ble_watch_lists.length; j++) {
+	                    if (ble_watch_lists[j].bd_addr == ble_devices_join_user_name[i].bd_addr) {
+	                        ble_devices_join_user_name[i].user_name = ble_watch_lists[j].user_name;
+	                    }
+	                }
+	            }
+	            var data = this.state.data;
+	            data.ble_station = { s_bd_addr: ble_devices[0].s_bd_addr };
+	            data.ble_devices = ble_devices_join_user_name;
 	            this.setState({ data: data });
 	        }
 	    }, {
@@ -82083,31 +82219,39 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var color = 'orange';
-	            var u_id = [{ text: 'account1', value: 'account1' }, { text: 'account2', value: 'account2' }];
+	            var _this2 = this;
+
 	            var ble_list = null;
-	            var ble_devices = this.state.data.ble_devices;
+	            var ble_devices = this.state.ui.result.ble_devices;
 	            var key_row_ble_list = 0;
 	            var col_per_row = 4;
 	            if (ble_devices.length != 0) {
 	                ble_list = [];
-	                for (var i = 0; i < ble_devices.length; i = i + col_per_row) {
+
+	                var _loop = function _loop(i) {
 	                    var ble_list_row = [null, null, null, null];
-	                    for (var j = 0; j < col_per_row; j++) {
+
+	                    var _loop2 = function _loop2(j) {
 	                        if (i + j < ble_devices.length) {
+	                            var watch_list = null;
+	                            if (ble_devices[i + j].user_name != '') {
+	                                watch_list = _react2.default.createElement(_semanticUiReact.Icon, { name: 'star', color: 'yellow' });
+	                            }
 	                            ble_list_row[j] = _react2.default.createElement(
 	                                _semanticUiReact.Grid.Column,
 	                                { key: 'row' + i + 'col' + j },
 	                                _react2.default.createElement(
 	                                    _semanticUiReact.Segment,
-	                                    { onClick: this.show.bind(this, ble_devices[i + j]) },
+	                                    { onClick: function onClick(e) {
+	                                            _this2.show(ble_devices[i + j]);
+	                                        } },
 	                                    _react2.default.createElement(
 	                                        _semanticUiReact.List,
 	                                        null,
 	                                        _react2.default.createElement(
 	                                            _semanticUiReact.List.Item,
 	                                            null,
-	                                            _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative', size: 'large', verticalAlign: 'middle' }),
+	                                            _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'bluetooth alternative', size: 'big', verticalAlign: 'middle' }),
 	                                            _react2.default.createElement(
 	                                                _semanticUiReact.List.Content,
 	                                                null,
@@ -82119,13 +82263,61 @@
 	                                                _react2.default.createElement(
 	                                                    _semanticUiReact.List.Description,
 	                                                    null,
-	                                                    ble_devices[i + j].company + '   ' + ble_devices[i + j].type + '   ' + ble_devices[i + j].name
+	                                                    _react2.default.createElement(
+	                                                        'b',
+	                                                        null,
+	                                                        'company:\xA0\xA0'
+	                                                    ),
+	                                                    ble_devices[i + j].company
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    _react2.default.createElement(
+	                                                        'b',
+	                                                        null,
+	                                                        'type:\xA0\xA0'
+	                                                    ),
+	                                                    ble_devices[i + j].type
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    _react2.default.createElement(
+	                                                        'b',
+	                                                        null,
+	                                                        'name:\xA0\xA0'
+	                                                    ),
+	                                                    ble_devices[i + j].name
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _semanticUiReact.List.Description,
+	                                                    null,
+	                                                    watch_list,
+	                                                    _react2.default.createElement(
+	                                                        'b',
+	                                                        null,
+	                                                        'user name:\xA0\xA0'
+	                                                    ),
+	                                                    ble_devices[i + j].user_name
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _semanticUiReact.List.Description,
 	                                                    { as: 'a' },
 	                                                    _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'feed', size: 'small' }),
-	                                                    'tx: ' + ble_devices[i + j].tx_power + ', rssi: ' + ble_devices[i + j].rssi
+	                                                    _react2.default.createElement(
+	                                                        'b',
+	                                                        null,
+	                                                        'tx:\xA0\xA0'
+	                                                    ),
+	                                                    ble_devices[i + j].tx_power,
+	                                                    ',',
+	                                                    _react2.default.createElement(
+	                                                        'b',
+	                                                        null,
+	                                                        '\xA0rssi:\xA0\xA0'
+	                                                    ),
+	                                                    ble_devices[i + j].rssi
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _semanticUiReact.List.Description,
@@ -82138,6 +82330,10 @@
 	                                )
 	                            );
 	                        }
+	                    };
+
+	                    for (var j = 0; j < col_per_row; j++) {
+	                        _loop2(j);
 	                    }
 	                    ble_list.push(_react2.default.createElement(
 	                        _semanticUiReact.Grid.Row,
@@ -82166,6 +82362,10 @@
 	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { key: 'row' + key_row_ble_list + '5', width: 2 })
 	                    ));
 	                    key_row_ble_list++;
+	                };
+
+	                for (var i = 0; i < ble_devices.length; i = i + col_per_row) {
+	                    _loop(i);
 	                }
 	            }
 	            return _react2.default.createElement(
@@ -82184,13 +82384,32 @@
 	                            _react2.default.createElement(
 	                                _semanticUiReact.Menu,
 	                                { secondary: true, size: 'small' },
-	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'company', active: this.state.ui.search.type === 'company', onClick: this.handleItemClick.bind(this, 'company') }),
-	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'type', active: this.state.ui.search.type === 'type', onClick: this.handleItemClick.bind(this, 'type') }),
-	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'name', active: this.state.ui.search.type === 'name', onClick: this.handleItemClick.bind(this, 'name') }),
+	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'address', active: this.state.ui.search.type === 'address', onClick: function onClick() {
+	                                        return _this2.itemOnClickHandler('address');
+	                                    } }),
+	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'company', active: this.state.ui.search.type === 'company', onClick: function onClick() {
+	                                        return _this2.itemOnClickHandler('company');
+	                                    } }),
+	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'type', active: this.state.ui.search.type === 'type', onClick: function onClick() {
+	                                        return _this2.itemOnClickHandler('type');
+	                                    } }),
+	                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'name', active: this.state.ui.search.type === 'name', onClick: function onClick() {
+	                                        return _this2.itemOnClickHandler('name');
+	                                    } }),
 	                                _react2.default.createElement(
 	                                    _semanticUiReact.Menu.Item,
 	                                    null,
-	                                    _react2.default.createElement(_semanticUiReact.Search, null)
+	                                    _react2.default.createElement(_semanticUiReact.Input, { icon: 'search', placeholder: 'Search for ' + this.state.ui.search.type + ' ...', value: this.state.ui.search.keyword, onChange: function onChange(e) {
+	                                            return _this2.searchOnChangeHandler(e);
+	                                        } })
+	                                ),
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Menu.Item,
+	                                    { active: this.state.ui.search.type === 'user name', onClick: function onClick() {
+	                                            return _this2.itemOnClickHandler('user name');
+	                                        } },
+	                                    _react2.default.createElement(_semanticUiReact.Icon, { name: 'star', color: 'yellow', size: 'large' }),
+	                                    'watch list'
 	                                ),
 	                                _react2.default.createElement(
 	                                    _semanticUiReact.Menu.Item,
@@ -82206,11 +82425,13 @@
 	                        ),
 	                        _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 2 })
 	                    ),
-	                    ble_list
+	                    ble_list /*ble devices block*/
 	                ),
 	                _react2.default.createElement(
 	                    _semanticUiReact.Modal,
-	                    { open: this.state.ui.modal.open, onClose: this.close.bind(this) },
+	                    { open: this.state.ui.modal.open, onClose: function onClose() {
+	                            return _this2.close();
+	                        } },
 	                    _react2.default.createElement(
 	                        _semanticUiReact.Modal.Header,
 	                        null,
@@ -82224,40 +82445,89 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                _semanticUiReact.Header,
-	                                null,
-	                                'Address: ' + this.state.ui.modal.ble_device.bd_addr + '  [' + this.state.ui.modal.ble_device.addr_type + ']'
+	                                { as: 'h3' },
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Header.Content,
+	                                    null,
+	                                    'Address:',
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.Header.Subheader,
+	                                        null,
+	                                        this.state.ui.modal.ble_device.bd_addr + '  [' + this.state.ui.modal.ble_device.addr_type + ']'
+	                                    )
+	                                )
 	                            ),
 	                            _react2.default.createElement(
 	                                _semanticUiReact.Header,
-	                                { as: 'h4' },
-	                                'Company: ' + this.state.ui.modal.ble_device.company
+	                                { as: 'h3' },
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Header.Content,
+	                                    null,
+	                                    'Company:',
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.Header.Subheader,
+	                                        null,
+	                                        this.state.ui.modal.ble_device.company
+	                                    )
+	                                )
 	                            ),
 	                            _react2.default.createElement(
 	                                _semanticUiReact.Header,
-	                                { as: 'h4' },
-	                                'Type: ' + this.state.ui.modal.ble_device.type
+	                                { as: 'h3' },
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Header.Content,
+	                                    null,
+	                                    'Type:',
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.Header.Subheader,
+	                                        null,
+	                                        this.state.ui.modal.ble_device.type
+	                                    )
+	                                )
 	                            ),
 	                            _react2.default.createElement(
 	                                _semanticUiReact.Header,
-	                                { as: 'h4' },
-	                                'Name: ' + this.state.ui.modal.ble_device.name
+	                                { as: 'h3' },
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Header.Content,
+	                                    null,
+	                                    'Name:',
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.Header.Subheader,
+	                                        null,
+	                                        this.state.ui.modal.ble_device.name
+	                                    )
+	                                )
 	                            ),
 	                            _react2.default.createElement(
 	                                _semanticUiReact.Header,
-	                                { as: 'h4' },
-	                                'Link Account: ',
-	                                _react2.default.createElement(_semanticUiReact.Select, { placeholder: 'user_id', options: u_id }),
-	                                _react2.default.createElement(_semanticUiReact.Input, { placeholder: 'user name', value: '' })
+	                                { as: 'h3' },
+	                                _react2.default.createElement(
+	                                    _semanticUiReact.Header.Content,
+	                                    null,
+	                                    'User Name:',
+	                                    _react2.default.createElement(
+	                                        _semanticUiReact.Header.Subheader,
+	                                        null,
+	                                        _react2.default.createElement(_semanticUiReact.Input, { placeholder: '', value: this.state.ui.modal.ble_device.user_name, onChange: function onChange(e) {
+	                                                return _this2.modalUserOnChangeHandler(e);
+	                                            }, icon: _react2.default.createElement(_semanticUiReact.Icon, { name: 'star', color: 'yellow' }), size: 'small' })
+	                                    )
+	                                )
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        _semanticUiReact.Modal.Actions,
 	                        null,
-	                        _react2.default.createElement(_semanticUiReact.Button, { positive: true, icon: 'checkmark', labelPosition: 'right', content: 'Confirm', onClick: this.close.bind(this) }),
+	                        _react2.default.createElement(_semanticUiReact.Button, { positive: true, icon: 'checkmark', labelPosition: 'right', content: 'Confirm', onClick: function onClick() {
+	                                return _this2.bleDeviceRegisterHandler();
+	                            } }),
 	                        _react2.default.createElement(
 	                            _semanticUiReact.Button,
-	                            { onClick: this.close.bind(this) },
+	                            { onClick: function onClick() {
+	                                    return _this2.close();
+	                                } },
 	                            'cancel'
 	                        )
 	                    )
@@ -82274,7 +82544,1496 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "BLE_List.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 769 */
+/* 770 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(771);
+
+/***/ },
+/* 771 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+	var bind = __webpack_require__(773);
+	var Axios = __webpack_require__(774);
+	var defaults = __webpack_require__(775);
+
+	/**
+	 * Create an instance of Axios
+	 *
+	 * @param {Object} defaultConfig The default config for the instance
+	 * @return {Axios} A new instance of Axios
+	 */
+	function createInstance(defaultConfig) {
+	  var context = new Axios(defaultConfig);
+	  var instance = bind(Axios.prototype.request, context);
+
+	  // Copy axios.prototype to instance
+	  utils.extend(instance, Axios.prototype, context);
+
+	  // Copy context to instance
+	  utils.extend(instance, context);
+
+	  return instance;
+	}
+
+	// Create the default instance to be exported
+	var axios = createInstance(defaults);
+
+	// Expose Axios class to allow class inheritance
+	axios.Axios = Axios;
+
+	// Factory for creating new instances
+	axios.create = function create(instanceConfig) {
+	  return createInstance(utils.merge(defaults, instanceConfig));
+	};
+
+	// Expose Cancel & CancelToken
+	axios.Cancel = __webpack_require__(792);
+	axios.CancelToken = __webpack_require__(793);
+	axios.isCancel = __webpack_require__(789);
+
+	// Expose all/spread
+	axios.all = function all(promises) {
+	  return Promise.all(promises);
+	};
+	axios.spread = __webpack_require__(794);
+
+	module.exports = axios;
+
+	// Allow use of default import syntax in TypeScript
+	module.exports.default = axios;
+
+
+/***/ },
+/* 772 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var bind = __webpack_require__(773);
+
+	/*global toString:true*/
+
+	// utils is a library of generic helper functions non-specific to axios
+
+	var toString = Object.prototype.toString;
+
+	/**
+	 * Determine if a value is an Array
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is an Array, otherwise false
+	 */
+	function isArray(val) {
+	  return toString.call(val) === '[object Array]';
+	}
+
+	/**
+	 * Determine if a value is an ArrayBuffer
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+	 */
+	function isArrayBuffer(val) {
+	  return toString.call(val) === '[object ArrayBuffer]';
+	}
+
+	/**
+	 * Determine if a value is a FormData
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is an FormData, otherwise false
+	 */
+	function isFormData(val) {
+	  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+	}
+
+	/**
+	 * Determine if a value is a view on an ArrayBuffer
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+	 */
+	function isArrayBufferView(val) {
+	  var result;
+	  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+	    result = ArrayBuffer.isView(val);
+	  } else {
+	    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+	  }
+	  return result;
+	}
+
+	/**
+	 * Determine if a value is a String
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a String, otherwise false
+	 */
+	function isString(val) {
+	  return typeof val === 'string';
+	}
+
+	/**
+	 * Determine if a value is a Number
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Number, otherwise false
+	 */
+	function isNumber(val) {
+	  return typeof val === 'number';
+	}
+
+	/**
+	 * Determine if a value is undefined
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if the value is undefined, otherwise false
+	 */
+	function isUndefined(val) {
+	  return typeof val === 'undefined';
+	}
+
+	/**
+	 * Determine if a value is an Object
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is an Object, otherwise false
+	 */
+	function isObject(val) {
+	  return val !== null && typeof val === 'object';
+	}
+
+	/**
+	 * Determine if a value is a Date
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Date, otherwise false
+	 */
+	function isDate(val) {
+	  return toString.call(val) === '[object Date]';
+	}
+
+	/**
+	 * Determine if a value is a File
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a File, otherwise false
+	 */
+	function isFile(val) {
+	  return toString.call(val) === '[object File]';
+	}
+
+	/**
+	 * Determine if a value is a Blob
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Blob, otherwise false
+	 */
+	function isBlob(val) {
+	  return toString.call(val) === '[object Blob]';
+	}
+
+	/**
+	 * Determine if a value is a Function
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Function, otherwise false
+	 */
+	function isFunction(val) {
+	  return toString.call(val) === '[object Function]';
+	}
+
+	/**
+	 * Determine if a value is a Stream
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Stream, otherwise false
+	 */
+	function isStream(val) {
+	  return isObject(val) && isFunction(val.pipe);
+	}
+
+	/**
+	 * Determine if a value is a URLSearchParams object
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+	 */
+	function isURLSearchParams(val) {
+	  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+	}
+
+	/**
+	 * Trim excess whitespace off the beginning and end of a string
+	 *
+	 * @param {String} str The String to trim
+	 * @returns {String} The String freed of excess whitespace
+	 */
+	function trim(str) {
+	  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+	}
+
+	/**
+	 * Determine if we're running in a standard browser environment
+	 *
+	 * This allows axios to run in a web worker, and react-native.
+	 * Both environments support XMLHttpRequest, but not fully standard globals.
+	 *
+	 * web workers:
+	 *  typeof window -> undefined
+	 *  typeof document -> undefined
+	 *
+	 * react-native:
+	 *  typeof document.createElement -> undefined
+	 */
+	function isStandardBrowserEnv() {
+	  return (
+	    typeof window !== 'undefined' &&
+	    typeof document !== 'undefined' &&
+	    typeof document.createElement === 'function'
+	  );
+	}
+
+	/**
+	 * Iterate over an Array or an Object invoking a function for each item.
+	 *
+	 * If `obj` is an Array callback will be called passing
+	 * the value, index, and complete array for each item.
+	 *
+	 * If 'obj' is an Object callback will be called passing
+	 * the value, key, and complete object for each property.
+	 *
+	 * @param {Object|Array} obj The object to iterate
+	 * @param {Function} fn The callback to invoke for each item
+	 */
+	function forEach(obj, fn) {
+	  // Don't bother if no value provided
+	  if (obj === null || typeof obj === 'undefined') {
+	    return;
+	  }
+
+	  // Force an array if not already something iterable
+	  if (typeof obj !== 'object' && !isArray(obj)) {
+	    /*eslint no-param-reassign:0*/
+	    obj = [obj];
+	  }
+
+	  if (isArray(obj)) {
+	    // Iterate over array values
+	    for (var i = 0, l = obj.length; i < l; i++) {
+	      fn.call(null, obj[i], i, obj);
+	    }
+	  } else {
+	    // Iterate over object keys
+	    for (var key in obj) {
+	      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+	        fn.call(null, obj[key], key, obj);
+	      }
+	    }
+	  }
+	}
+
+	/**
+	 * Accepts varargs expecting each argument to be an object, then
+	 * immutably merges the properties of each object and returns result.
+	 *
+	 * When multiple objects contain the same key the later object in
+	 * the arguments list will take precedence.
+	 *
+	 * Example:
+	 *
+	 * ```js
+	 * var result = merge({foo: 123}, {foo: 456});
+	 * console.log(result.foo); // outputs 456
+	 * ```
+	 *
+	 * @param {Object} obj1 Object to merge
+	 * @returns {Object} Result of all merge properties
+	 */
+	function merge(/* obj1, obj2, obj3, ... */) {
+	  var result = {};
+	  function assignValue(val, key) {
+	    if (typeof result[key] === 'object' && typeof val === 'object') {
+	      result[key] = merge(result[key], val);
+	    } else {
+	      result[key] = val;
+	    }
+	  }
+
+	  for (var i = 0, l = arguments.length; i < l; i++) {
+	    forEach(arguments[i], assignValue);
+	  }
+	  return result;
+	}
+
+	/**
+	 * Extends object a by mutably adding to it the properties of object b.
+	 *
+	 * @param {Object} a The object to be extended
+	 * @param {Object} b The object to copy properties from
+	 * @param {Object} thisArg The object to bind function to
+	 * @return {Object} The resulting value of object a
+	 */
+	function extend(a, b, thisArg) {
+	  forEach(b, function assignValue(val, key) {
+	    if (thisArg && typeof val === 'function') {
+	      a[key] = bind(val, thisArg);
+	    } else {
+	      a[key] = val;
+	    }
+	  });
+	  return a;
+	}
+
+	module.exports = {
+	  isArray: isArray,
+	  isArrayBuffer: isArrayBuffer,
+	  isFormData: isFormData,
+	  isArrayBufferView: isArrayBufferView,
+	  isString: isString,
+	  isNumber: isNumber,
+	  isObject: isObject,
+	  isUndefined: isUndefined,
+	  isDate: isDate,
+	  isFile: isFile,
+	  isBlob: isBlob,
+	  isFunction: isFunction,
+	  isStream: isStream,
+	  isURLSearchParams: isURLSearchParams,
+	  isStandardBrowserEnv: isStandardBrowserEnv,
+	  forEach: forEach,
+	  merge: merge,
+	  extend: extend,
+	  trim: trim
+	};
+
+
+/***/ },
+/* 773 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function bind(fn, thisArg) {
+	  return function wrap() {
+	    var args = new Array(arguments.length);
+	    for (var i = 0; i < args.length; i++) {
+	      args[i] = arguments[i];
+	    }
+	    return fn.apply(thisArg, args);
+	  };
+	};
+
+
+/***/ },
+/* 774 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var defaults = __webpack_require__(775);
+	var utils = __webpack_require__(772);
+	var InterceptorManager = __webpack_require__(786);
+	var dispatchRequest = __webpack_require__(787);
+	var isAbsoluteURL = __webpack_require__(790);
+	var combineURLs = __webpack_require__(791);
+
+	/**
+	 * Create a new instance of Axios
+	 *
+	 * @param {Object} instanceConfig The default config for the instance
+	 */
+	function Axios(instanceConfig) {
+	  this.defaults = instanceConfig;
+	  this.interceptors = {
+	    request: new InterceptorManager(),
+	    response: new InterceptorManager()
+	  };
+	}
+
+	/**
+	 * Dispatch a request
+	 *
+	 * @param {Object} config The config specific for this request (merged with this.defaults)
+	 */
+	Axios.prototype.request = function request(config) {
+	  /*eslint no-param-reassign:0*/
+	  // Allow for axios('example/url'[, config]) a la fetch API
+	  if (typeof config === 'string') {
+	    config = utils.merge({
+	      url: arguments[0]
+	    }, arguments[1]);
+	  }
+
+	  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+
+	  // Support baseURL config
+	  if (config.baseURL && !isAbsoluteURL(config.url)) {
+	    config.url = combineURLs(config.baseURL, config.url);
+	  }
+
+	  // Hook up interceptors middleware
+	  var chain = [dispatchRequest, undefined];
+	  var promise = Promise.resolve(config);
+
+	  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+	    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+	  });
+
+	  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+	    chain.push(interceptor.fulfilled, interceptor.rejected);
+	  });
+
+	  while (chain.length) {
+	    promise = promise.then(chain.shift(), chain.shift());
+	  }
+
+	  return promise;
+	};
+
+	// Provide aliases for supported request methods
+	utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+	  /*eslint func-names:0*/
+	  Axios.prototype[method] = function(url, config) {
+	    return this.request(utils.merge(config || {}, {
+	      method: method,
+	      url: url
+	    }));
+	  };
+	});
+
+	utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+	  /*eslint func-names:0*/
+	  Axios.prototype[method] = function(url, data, config) {
+	    return this.request(utils.merge(config || {}, {
+	      method: method,
+	      url: url,
+	      data: data
+	    }));
+	  };
+	});
+
+	module.exports = Axios;
+
+
+/***/ },
+/* 775 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var utils = __webpack_require__(772);
+	var normalizeHeaderName = __webpack_require__(776);
+
+	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
+	var DEFAULT_CONTENT_TYPE = {
+	  'Content-Type': 'application/x-www-form-urlencoded'
+	};
+
+	function setContentTypeIfUnset(headers, value) {
+	  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+	    headers['Content-Type'] = value;
+	  }
+	}
+
+	function getDefaultAdapter() {
+	  var adapter;
+	  if (typeof XMLHttpRequest !== 'undefined') {
+	    // For browsers use XHR adapter
+	    adapter = __webpack_require__(777);
+	  } else if (typeof process !== 'undefined') {
+	    // For node use HTTP adapter
+	    adapter = __webpack_require__(777);
+	  }
+	  return adapter;
+	}
+
+	var defaults = {
+	  adapter: getDefaultAdapter(),
+
+	  transformRequest: [function transformRequest(data, headers) {
+	    normalizeHeaderName(headers, 'Content-Type');
+	    if (utils.isFormData(data) ||
+	      utils.isArrayBuffer(data) ||
+	      utils.isStream(data) ||
+	      utils.isFile(data) ||
+	      utils.isBlob(data)
+	    ) {
+	      return data;
+	    }
+	    if (utils.isArrayBufferView(data)) {
+	      return data.buffer;
+	    }
+	    if (utils.isURLSearchParams(data)) {
+	      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+	      return data.toString();
+	    }
+	    if (utils.isObject(data)) {
+	      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+	      return JSON.stringify(data);
+	    }
+	    return data;
+	  }],
+
+	  transformResponse: [function transformResponse(data) {
+	    /*eslint no-param-reassign:0*/
+	    if (typeof data === 'string') {
+	      data = data.replace(PROTECTION_PREFIX, '');
+	      try {
+	        data = JSON.parse(data);
+	      } catch (e) { /* Ignore */ }
+	    }
+	    return data;
+	  }],
+
+	  timeout: 0,
+
+	  xsrfCookieName: 'XSRF-TOKEN',
+	  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+	  maxContentLength: -1,
+
+	  validateStatus: function validateStatus(status) {
+	    return status >= 200 && status < 300;
+	  }
+	};
+
+	defaults.headers = {
+	  common: {
+	    'Accept': 'application/json, text/plain, */*'
+	  }
+	};
+
+	utils.forEach(['delete', 'get', 'head'], function forEachMehtodNoData(method) {
+	  defaults.headers[method] = {};
+	});
+
+	utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+	  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+	});
+
+	module.exports = defaults;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 776 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+
+	module.exports = function normalizeHeaderName(headers, normalizedName) {
+	  utils.forEach(headers, function processHeader(value, name) {
+	    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+	      headers[normalizedName] = value;
+	      delete headers[name];
+	    }
+	  });
+	};
+
+
+/***/ },
+/* 777 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var utils = __webpack_require__(772);
+	var settle = __webpack_require__(778);
+	var buildURL = __webpack_require__(781);
+	var parseHeaders = __webpack_require__(782);
+	var isURLSameOrigin = __webpack_require__(783);
+	var createError = __webpack_require__(779);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(784);
+
+	module.exports = function xhrAdapter(config) {
+	  return new Promise(function dispatchXhrRequest(resolve, reject) {
+	    var requestData = config.data;
+	    var requestHeaders = config.headers;
+
+	    if (utils.isFormData(requestData)) {
+	      delete requestHeaders['Content-Type']; // Let the browser set it
+	    }
+
+	    var request = new XMLHttpRequest();
+	    var loadEvent = 'onreadystatechange';
+	    var xDomain = false;
+
+	    // For IE 8/9 CORS support
+	    // Only supports POST and GET calls and doesn't returns the response headers.
+	    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+	    if (process.env.NODE_ENV !== 'test' &&
+	        typeof window !== 'undefined' &&
+	        window.XDomainRequest && !('withCredentials' in request) &&
+	        !isURLSameOrigin(config.url)) {
+	      request = new window.XDomainRequest();
+	      loadEvent = 'onload';
+	      xDomain = true;
+	      request.onprogress = function handleProgress() {};
+	      request.ontimeout = function handleTimeout() {};
+	    }
+
+	    // HTTP basic authentication
+	    if (config.auth) {
+	      var username = config.auth.username || '';
+	      var password = config.auth.password || '';
+	      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+	    }
+
+	    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+	    // Set the request timeout in MS
+	    request.timeout = config.timeout;
+
+	    // Listen for ready state
+	    request[loadEvent] = function handleLoad() {
+	      if (!request || (request.readyState !== 4 && !xDomain)) {
+	        return;
+	      }
+
+	      // The request errored out and we didn't get a response, this will be
+	      // handled by onerror instead
+	      // With one exception: request that using file: protocol, most browsers
+	      // will return status as 0 even though it's a successful request
+	      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+	        return;
+	      }
+
+	      // Prepare the response
+	      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+	      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+	      var response = {
+	        data: responseData,
+	        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+	        status: request.status === 1223 ? 204 : request.status,
+	        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+	        headers: responseHeaders,
+	        config: config,
+	        request: request
+	      };
+
+	      settle(resolve, reject, response);
+
+	      // Clean up request
+	      request = null;
+	    };
+
+	    // Handle low level network errors
+	    request.onerror = function handleError() {
+	      // Real errors are hidden from us by the browser
+	      // onerror should only fire if it's a network error
+	      reject(createError('Network Error', config));
+
+	      // Clean up request
+	      request = null;
+	    };
+
+	    // Handle timeout
+	    request.ontimeout = function handleTimeout() {
+	      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED'));
+
+	      // Clean up request
+	      request = null;
+	    };
+
+	    // Add xsrf header
+	    // This is only done if running in a standard browser environment.
+	    // Specifically not if we're in a web worker, or react-native.
+	    if (utils.isStandardBrowserEnv()) {
+	      var cookies = __webpack_require__(785);
+
+	      // Add xsrf header
+	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+	          cookies.read(config.xsrfCookieName) :
+	          undefined;
+
+	      if (xsrfValue) {
+	        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+	      }
+	    }
+
+	    // Add headers to the request
+	    if ('setRequestHeader' in request) {
+	      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+	        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+	          // Remove Content-Type if data is undefined
+	          delete requestHeaders[key];
+	        } else {
+	          // Otherwise add header to the request
+	          request.setRequestHeader(key, val);
+	        }
+	      });
+	    }
+
+	    // Add withCredentials to request if needed
+	    if (config.withCredentials) {
+	      request.withCredentials = true;
+	    }
+
+	    // Add responseType to request if needed
+	    if (config.responseType) {
+	      try {
+	        request.responseType = config.responseType;
+	      } catch (e) {
+	        if (request.responseType !== 'json') {
+	          throw e;
+	        }
+	      }
+	    }
+
+	    // Handle progress if needed
+	    if (typeof config.onDownloadProgress === 'function') {
+	      request.addEventListener('progress', config.onDownloadProgress);
+	    }
+
+	    // Not all browsers support upload events
+	    if (typeof config.onUploadProgress === 'function' && request.upload) {
+	      request.upload.addEventListener('progress', config.onUploadProgress);
+	    }
+
+	    if (config.cancelToken) {
+	      // Handle cancellation
+	      config.cancelToken.promise.then(function onCanceled(cancel) {
+	        if (!request) {
+	          return;
+	        }
+
+	        request.abort();
+	        reject(cancel);
+	        // Clean up request
+	        request = null;
+	      });
+	    }
+
+	    if (requestData === undefined) {
+	      requestData = null;
+	    }
+
+	    // Send the request
+	    request.send(requestData);
+	  });
+	};
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 778 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var createError = __webpack_require__(779);
+
+	/**
+	 * Resolve or reject a Promise based on response status.
+	 *
+	 * @param {Function} resolve A function that resolves the promise.
+	 * @param {Function} reject A function that rejects the promise.
+	 * @param {object} response The response.
+	 */
+	module.exports = function settle(resolve, reject, response) {
+	  var validateStatus = response.config.validateStatus;
+	  // Note: status is not exposed by XDomainRequest
+	  if (!response.status || !validateStatus || validateStatus(response.status)) {
+	    resolve(response);
+	  } else {
+	    reject(createError(
+	      'Request failed with status code ' + response.status,
+	      response.config,
+	      null,
+	      response
+	    ));
+	  }
+	};
+
+
+/***/ },
+/* 779 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var enhanceError = __webpack_require__(780);
+
+	/**
+	 * Create an Error with the specified message, config, error code, and response.
+	 *
+	 * @param {string} message The error message.
+	 * @param {Object} config The config.
+	 * @param {string} [code] The error code (for example, 'ECONNABORTED').
+	 @ @param {Object} [response] The response.
+	 * @returns {Error} The created error.
+	 */
+	module.exports = function createError(message, config, code, response) {
+	  var error = new Error(message);
+	  return enhanceError(error, config, code, response);
+	};
+
+
+/***/ },
+/* 780 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Update an Error with the specified config, error code, and response.
+	 *
+	 * @param {Error} error The error to update.
+	 * @param {Object} config The config.
+	 * @param {string} [code] The error code (for example, 'ECONNABORTED').
+	 @ @param {Object} [response] The response.
+	 * @returns {Error} The error.
+	 */
+	module.exports = function enhanceError(error, config, code, response) {
+	  error.config = config;
+	  if (code) {
+	    error.code = code;
+	  }
+	  error.response = response;
+	  return error;
+	};
+
+
+/***/ },
+/* 781 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+
+	function encode(val) {
+	  return encodeURIComponent(val).
+	    replace(/%40/gi, '@').
+	    replace(/%3A/gi, ':').
+	    replace(/%24/g, '$').
+	    replace(/%2C/gi, ',').
+	    replace(/%20/g, '+').
+	    replace(/%5B/gi, '[').
+	    replace(/%5D/gi, ']');
+	}
+
+	/**
+	 * Build a URL by appending params to the end
+	 *
+	 * @param {string} url The base of the url (e.g., http://www.google.com)
+	 * @param {object} [params] The params to be appended
+	 * @returns {string} The formatted url
+	 */
+	module.exports = function buildURL(url, params, paramsSerializer) {
+	  /*eslint no-param-reassign:0*/
+	  if (!params) {
+	    return url;
+	  }
+
+	  var serializedParams;
+	  if (paramsSerializer) {
+	    serializedParams = paramsSerializer(params);
+	  } else if (utils.isURLSearchParams(params)) {
+	    serializedParams = params.toString();
+	  } else {
+	    var parts = [];
+
+	    utils.forEach(params, function serialize(val, key) {
+	      if (val === null || typeof val === 'undefined') {
+	        return;
+	      }
+
+	      if (utils.isArray(val)) {
+	        key = key + '[]';
+	      }
+
+	      if (!utils.isArray(val)) {
+	        val = [val];
+	      }
+
+	      utils.forEach(val, function parseValue(v) {
+	        if (utils.isDate(v)) {
+	          v = v.toISOString();
+	        } else if (utils.isObject(v)) {
+	          v = JSON.stringify(v);
+	        }
+	        parts.push(encode(key) + '=' + encode(v));
+	      });
+	    });
+
+	    serializedParams = parts.join('&');
+	  }
+
+	  if (serializedParams) {
+	    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+	  }
+
+	  return url;
+	};
+
+
+/***/ },
+/* 782 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+
+	/**
+	 * Parse headers into an object
+	 *
+	 * ```
+	 * Date: Wed, 27 Aug 2014 08:58:49 GMT
+	 * Content-Type: application/json
+	 * Connection: keep-alive
+	 * Transfer-Encoding: chunked
+	 * ```
+	 *
+	 * @param {String} headers Headers needing to be parsed
+	 * @returns {Object} Headers parsed into an object
+	 */
+	module.exports = function parseHeaders(headers) {
+	  var parsed = {};
+	  var key;
+	  var val;
+	  var i;
+
+	  if (!headers) { return parsed; }
+
+	  utils.forEach(headers.split('\n'), function parser(line) {
+	    i = line.indexOf(':');
+	    key = utils.trim(line.substr(0, i)).toLowerCase();
+	    val = utils.trim(line.substr(i + 1));
+
+	    if (key) {
+	      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+	    }
+	  });
+
+	  return parsed;
+	};
+
+
+/***/ },
+/* 783 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+
+	module.exports = (
+	  utils.isStandardBrowserEnv() ?
+
+	  // Standard browser envs have full support of the APIs needed to test
+	  // whether the request URL is of the same origin as current location.
+	  (function standardBrowserEnv() {
+	    var msie = /(msie|trident)/i.test(navigator.userAgent);
+	    var urlParsingNode = document.createElement('a');
+	    var originURL;
+
+	    /**
+	    * Parse a URL to discover it's components
+	    *
+	    * @param {String} url The URL to be parsed
+	    * @returns {Object}
+	    */
+	    function resolveURL(url) {
+	      var href = url;
+
+	      if (msie) {
+	        // IE needs attribute set twice to normalize properties
+	        urlParsingNode.setAttribute('href', href);
+	        href = urlParsingNode.href;
+	      }
+
+	      urlParsingNode.setAttribute('href', href);
+
+	      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+	      return {
+	        href: urlParsingNode.href,
+	        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+	        host: urlParsingNode.host,
+	        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+	        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+	        hostname: urlParsingNode.hostname,
+	        port: urlParsingNode.port,
+	        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+	                  urlParsingNode.pathname :
+	                  '/' + urlParsingNode.pathname
+	      };
+	    }
+
+	    originURL = resolveURL(window.location.href);
+
+	    /**
+	    * Determine if a URL shares the same origin as the current location
+	    *
+	    * @param {String} requestURL The URL to test
+	    * @returns {boolean} True if URL shares the same origin, otherwise false
+	    */
+	    return function isURLSameOrigin(requestURL) {
+	      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+	      return (parsed.protocol === originURL.protocol &&
+	            parsed.host === originURL.host);
+	    };
+	  })() :
+
+	  // Non standard browser envs (web workers, react-native) lack needed support.
+	  (function nonStandardBrowserEnv() {
+	    return function isURLSameOrigin() {
+	      return true;
+	    };
+	  })()
+	);
+
+
+/***/ },
+/* 784 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+	var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+	function E() {
+	  this.message = 'String contains an invalid character';
+	}
+	E.prototype = new Error;
+	E.prototype.code = 5;
+	E.prototype.name = 'InvalidCharacterError';
+
+	function btoa(input) {
+	  var str = String(input);
+	  var output = '';
+	  for (
+	    // initialize result and counter
+	    var block, charCode, idx = 0, map = chars;
+	    // if the next str index does not exist:
+	    //   change the mapping table to "="
+	    //   check if d has no fractional digits
+	    str.charAt(idx | 0) || (map = '=', idx % 1);
+	    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+	    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+	  ) {
+	    charCode = str.charCodeAt(idx += 3 / 4);
+	    if (charCode > 0xFF) {
+	      throw new E();
+	    }
+	    block = block << 8 | charCode;
+	  }
+	  return output;
+	}
+
+	module.exports = btoa;
+
+
+/***/ },
+/* 785 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+
+	module.exports = (
+	  utils.isStandardBrowserEnv() ?
+
+	  // Standard browser envs support document.cookie
+	  (function standardBrowserEnv() {
+	    return {
+	      write: function write(name, value, expires, path, domain, secure) {
+	        var cookie = [];
+	        cookie.push(name + '=' + encodeURIComponent(value));
+
+	        if (utils.isNumber(expires)) {
+	          cookie.push('expires=' + new Date(expires).toGMTString());
+	        }
+
+	        if (utils.isString(path)) {
+	          cookie.push('path=' + path);
+	        }
+
+	        if (utils.isString(domain)) {
+	          cookie.push('domain=' + domain);
+	        }
+
+	        if (secure === true) {
+	          cookie.push('secure');
+	        }
+
+	        document.cookie = cookie.join('; ');
+	      },
+
+	      read: function read(name) {
+	        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+	        return (match ? decodeURIComponent(match[3]) : null);
+	      },
+
+	      remove: function remove(name) {
+	        this.write(name, '', Date.now() - 86400000);
+	      }
+	    };
+	  })() :
+
+	  // Non standard browser env (web workers, react-native) lack needed support.
+	  (function nonStandardBrowserEnv() {
+	    return {
+	      write: function write() {},
+	      read: function read() { return null; },
+	      remove: function remove() {}
+	    };
+	  })()
+	);
+
+
+/***/ },
+/* 786 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+
+	function InterceptorManager() {
+	  this.handlers = [];
+	}
+
+	/**
+	 * Add a new interceptor to the stack
+	 *
+	 * @param {Function} fulfilled The function to handle `then` for a `Promise`
+	 * @param {Function} rejected The function to handle `reject` for a `Promise`
+	 *
+	 * @return {Number} An ID used to remove interceptor later
+	 */
+	InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+	  this.handlers.push({
+	    fulfilled: fulfilled,
+	    rejected: rejected
+	  });
+	  return this.handlers.length - 1;
+	};
+
+	/**
+	 * Remove an interceptor from the stack
+	 *
+	 * @param {Number} id The ID that was returned by `use`
+	 */
+	InterceptorManager.prototype.eject = function eject(id) {
+	  if (this.handlers[id]) {
+	    this.handlers[id] = null;
+	  }
+	};
+
+	/**
+	 * Iterate over all the registered interceptors
+	 *
+	 * This method is particularly useful for skipping over any
+	 * interceptors that may have become `null` calling `eject`.
+	 *
+	 * @param {Function} fn The function to call for each interceptor
+	 */
+	InterceptorManager.prototype.forEach = function forEach(fn) {
+	  utils.forEach(this.handlers, function forEachHandler(h) {
+	    if (h !== null) {
+	      fn(h);
+	    }
+	  });
+	};
+
+	module.exports = InterceptorManager;
+
+
+/***/ },
+/* 787 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+	var transformData = __webpack_require__(788);
+	var isCancel = __webpack_require__(789);
+	var defaults = __webpack_require__(775);
+
+	/**
+	 * Throws a `Cancel` if cancellation has been requested.
+	 */
+	function throwIfCancellationRequested(config) {
+	  if (config.cancelToken) {
+	    config.cancelToken.throwIfRequested();
+	  }
+	}
+
+	/**
+	 * Dispatch a request to the server using the configured adapter.
+	 *
+	 * @param {object} config The config that is to be used for the request
+	 * @returns {Promise} The Promise to be fulfilled
+	 */
+	module.exports = function dispatchRequest(config) {
+	  throwIfCancellationRequested(config);
+
+	  // Ensure headers exist
+	  config.headers = config.headers || {};
+
+	  // Transform request data
+	  config.data = transformData(
+	    config.data,
+	    config.headers,
+	    config.transformRequest
+	  );
+
+	  // Flatten headers
+	  config.headers = utils.merge(
+	    config.headers.common || {},
+	    config.headers[config.method] || {},
+	    config.headers || {}
+	  );
+
+	  utils.forEach(
+	    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+	    function cleanHeaderConfig(method) {
+	      delete config.headers[method];
+	    }
+	  );
+
+	  var adapter = config.adapter || defaults.adapter;
+
+	  return adapter(config).then(function onAdapterResolution(response) {
+	    throwIfCancellationRequested(config);
+
+	    // Transform response data
+	    response.data = transformData(
+	      response.data,
+	      response.headers,
+	      config.transformResponse
+	    );
+
+	    return response;
+	  }, function onAdapterRejection(reason) {
+	    if (!isCancel(reason)) {
+	      throwIfCancellationRequested(config);
+
+	      // Transform response data
+	      if (reason && reason.response) {
+	        reason.response.data = transformData(
+	          reason.response.data,
+	          reason.response.headers,
+	          config.transformResponse
+	        );
+	      }
+	    }
+
+	    return Promise.reject(reason);
+	  });
+	};
+
+
+/***/ },
+/* 788 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(772);
+
+	/**
+	 * Transform the data for a request or a response
+	 *
+	 * @param {Object|String} data The data to be transformed
+	 * @param {Array} headers The headers for the request or response
+	 * @param {Array|Function} fns A single function or Array of functions
+	 * @returns {*} The resulting transformed data
+	 */
+	module.exports = function transformData(data, headers, fns) {
+	  /*eslint no-param-reassign:0*/
+	  utils.forEach(fns, function transform(fn) {
+	    data = fn(data, headers);
+	  });
+
+	  return data;
+	};
+
+
+/***/ },
+/* 789 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function isCancel(value) {
+	  return !!(value && value.__CANCEL__);
+	};
+
+
+/***/ },
+/* 790 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Determines whether the specified URL is absolute
+	 *
+	 * @param {string} url The URL to test
+	 * @returns {boolean} True if the specified URL is absolute, otherwise false
+	 */
+	module.exports = function isAbsoluteURL(url) {
+	  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+	  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+	  // by any combination of letters, digits, plus, period, or hyphen.
+	  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+	};
+
+
+/***/ },
+/* 791 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Creates a new URL by combining the specified URLs
+	 *
+	 * @param {string} baseURL The base URL
+	 * @param {string} relativeURL The relative URL
+	 * @returns {string} The combined URL
+	 */
+	module.exports = function combineURLs(baseURL, relativeURL) {
+	  return baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '');
+	};
+
+
+/***/ },
+/* 792 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * A `Cancel` is an object that is thrown when an operation is canceled.
+	 *
+	 * @class
+	 * @param {string=} message The message.
+	 */
+	function Cancel(message) {
+	  this.message = message;
+	}
+
+	Cancel.prototype.toString = function toString() {
+	  return 'Cancel' + (this.message ? ': ' + this.message : '');
+	};
+
+	Cancel.prototype.__CANCEL__ = true;
+
+	module.exports = Cancel;
+
+
+/***/ },
+/* 793 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Cancel = __webpack_require__(792);
+
+	/**
+	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
+	 *
+	 * @class
+	 * @param {Function} executor The executor function.
+	 */
+	function CancelToken(executor) {
+	  if (typeof executor !== 'function') {
+	    throw new TypeError('executor must be a function.');
+	  }
+
+	  var resolvePromise;
+	  this.promise = new Promise(function promiseExecutor(resolve) {
+	    resolvePromise = resolve;
+	  });
+
+	  var token = this;
+	  executor(function cancel(message) {
+	    if (token.reason) {
+	      // Cancellation has already been requested
+	      return;
+	    }
+
+	    token.reason = new Cancel(message);
+	    resolvePromise(token.reason);
+	  });
+	}
+
+	/**
+	 * Throws a `Cancel` if cancellation has been requested.
+	 */
+	CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+	  if (this.reason) {
+	    throw this.reason;
+	  }
+	};
+
+	/**
+	 * Returns an object that contains a new `CancelToken` and a function that, when called,
+	 * cancels the `CancelToken`.
+	 */
+	CancelToken.source = function source() {
+	  var cancel;
+	  var token = new CancelToken(function executor(c) {
+	    cancel = c;
+	  });
+	  return {
+	    token: token,
+	    cancel: cancel
+	  };
+	};
+
+	module.exports = CancelToken;
+
+
+/***/ },
+/* 794 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Syntactic sugar for invoking a function and expanding an array for arguments.
+	 *
+	 * Common use case would be to use `Function.prototype.apply`.
+	 *
+	 *  ```js
+	 *  function f(x, y, z) {}
+	 *  var args = [1, 2, 3];
+	 *  f.apply(null, args);
+	 *  ```
+	 *
+	 * With `spread` this example can be re-written.
+	 *
+	 *  ```js
+	 *  spread(function(x, y, z) {})([1, 2, 3]);
+	 *  ```
+	 *
+	 * @param {Function} callback
+	 * @returns {Function}
+	 */
+	module.exports = function spread(callback) {
+	  return function wrap(arr) {
+	    return callback.apply(null, arr);
+	  };
+	};
+
+
+/***/ },
+/* 795 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -82397,7 +84156,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Account.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 770 */
+/* 796 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -82474,7 +84233,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Login.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 771 */
+/* 797 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\nodeJS\\React\\React\\BLE-Locator\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
