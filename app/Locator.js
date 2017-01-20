@@ -83,8 +83,8 @@ export default class Locator extends React.Component {
             data: {
                 area: {width:50,height:50,meters_unit:1},
                 ble_stations:[
-                    {bd_addr:'00:1A:7D:DA:71:07',name:'raspberry pi1',x:30,y:25},
-                    // {bd_addr:'00:1A:7D:DA:71:08',name:'raspberry pi2',x:10,y:15}
+                    {bd_addr:'00:1A:7D:DA:71:07',name:'raspberry pi1',x:20,y:40},
+                    {bd_addr:'B8:27:EB:C3:35:58',name:'raspberry pi2',x:35,y:20}
                 ],//ble station object => {bd_addr:'',name:'',x,y}
                 ble_devices:[
                     {bd_addr:'bd_addr1', addr_type:'', type:'', company:'', name:'', ble_stations:[], distance:[{s_bd_addr:'00:1A:7D:DA:71:07',distance:4}], locations:[]},
@@ -127,7 +127,7 @@ export default class Locator extends React.Component {
         // window.addEventListener('resize', this.updateDimensions);
     }
     socketHandler(ble_devices){
-        // console.log(ble_devices);
+        console.log(ble_devices);
         const data = this.state.data;
         data.ble_devices = ble_devices;
         let ui = this.bleLocationHandler(ble_devices);
@@ -159,7 +159,7 @@ export default class Locator extends React.Component {
                 for(let j = 0; j < ble_devices_data[i].distance.length; j++){
                     for(let k = 0; k < ble_statsions_data.length; k++){
                         if(ble_devices_data[i].distance[j].s_bd_addr == ble_statsions_data[k].bd_addr){
-                            if((ble_devices_data[i].distance[j].distance!='')&&(ble_devices_data[i].distance[j].distance<area.width)){
+                            if((ble_devices_data[i].distance[j].distance!='')&&(ble_devices_data[i].distance[j].distance< 2 * area.width)){
                                 let width_size = ble_devices_data[i].distance[j].distance/area.meters_unit/area.width*100;
                                 let height_size = ble_devices_data[i].distance[j].distance/area.meters_unit/area.height*100;
                                 let x_pos = ble_statsions_data[k].x/area.width*100 - width_size/2;
@@ -265,6 +265,8 @@ export default class Locator extends React.Component {
         let ble_devices = this.state.data.ble_devices;
         let key_ble_devices_list = 0;
         let key_ble_devices_stations = 0;
+        let key_ble_devices_distance = 0;
+        let key_ble_devices_locations = 0;
         if(ble_devices.length!=0){
             ble_devices_list = [];
             for(let i = 0; i < ble_devices.length; i++){
@@ -273,10 +275,32 @@ export default class Locator extends React.Component {
                     ble_devices_stations = [];
                     for(let j = 0; j < ble_devices[i].ble_stations.length; j++){
                         ble_devices_stations.push(
-                            <List.Description as='a' key={'stations' + key_ble_devices_stations + '0'}><List.Icon name='feed' size='small' />{'tx: ' + ble_devices[i].ble_stations[j].tx_power + ', rssi: '+ ble_devices[i].ble_stations[j].rssi}</List.Description>
-                            ,<List.Description as='a' key={'stations' + key_ble_devices_stations + '1'}>{ble_devices[i].ble_stations[j].datetime}</List.Description>
+                            <List.Description as='a' key={'stations' + key_ble_devices_stations + '0'}><List.Icon name='feed' size='small' />{'tx: ' + ble_devices[i].ble_stations[j].tx_power + ', rssi: '+ ble_devices[i].ble_stations[j].rssi}</List.Description>,
+                            <List.Description as='a' key={'stations' + key_ble_devices_stations + '1'}>{ble_devices[i].ble_stations[j].datetime}</List.Description>,
+                            <List.Description as='a' key={'stations' + key_ble_devices_stations + '2'}>{'s_bd_addr: ' + ble_devices[i].ble_stations[j].s_bd_addr}</List.Description>
                         );
                         key_ble_devices_stations++;
+                    }
+                }
+                let ble_devices_distance = null;
+                if(ble_devices[i].distance.length!=0){
+                    ble_devices_distance = [];
+                    for(let j = 0; j < ble_devices[i].distance.length; j++){
+                        ble_devices_distance.push(
+                            <List.Description as='a' key={'distance' + key_ble_devices_distance + j +'0'}>{'s_bd_addr: ' + ble_devices[i].distance[j].s_bd_addr}</List.Description>,
+                            <List.Description as='a' key={'distance' + key_ble_devices_distance + j +'1'}>{'distance: ' + ble_devices[i].distance[j].distance}</List.Description>
+                        );
+                        key_ble_devices_distance++;
+                    }
+                }
+                let ble_devices_locations = null;
+                if(ble_devices[i].locations.length!=0){
+                    ble_devices_locations = [];
+                    for(let j = 0; j < ble_devices[i].locations.length; j++){
+                        ble_devices_locations.push(
+                            <List.Description as='a' key={'locations' + key_ble_devices_locations + j}>{'x: ' + ble_devices[i].locations[j].x + 'y: ' + ble_devices[i].locations[j].y}</List.Description>
+                        );
+                        key_ble_devices_locations++;
                     }
                 }
                 ble_devices_list.push(<List.Item key={key_ble_devices_list}>
@@ -285,6 +309,8 @@ export default class Locator extends React.Component {
                                             <List.Header as='a'>{ble_devices[i].bd_addr + '  [' + ble_devices[i].addr_type + ']'}</List.Header>
                                             <List.Description as='a'>{ble_devices[i].company + '   ' + ble_devices[i].type + '   ' + ble_devices[i].name}</List.Description>
                                             {ble_devices_stations}
+                                            {ble_devices_distance}
+                                            {ble_devices_locations}
                                         </List.Content>
                                       </List.Item>);
                 key_ble_devices_list++;

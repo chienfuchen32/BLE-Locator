@@ -39,8 +39,8 @@ export default class Map_Setup extends React.Component {
             data: {
                 area: {width:50,height:50,meters_unit:1},
                 ble_stations:[
-                    {bd_addr:'00:1A:7D:DA:71:07',name:'raspberry pi1',x:30,y:25},
-                    // {bd_addr:'00:1A:7D:DA:71:08',name:'raspberry pi2',x:10,y:15}
+                    {bd_addr:'00:1A:7D:DA:71:07',name:'raspberry pi1',x:20,y:40},
+                    {bd_addr:'B8:27:EB:C3:35:58',name:'raspberry pi2',x:35,y:20}
                 ]
             },
             image: null
