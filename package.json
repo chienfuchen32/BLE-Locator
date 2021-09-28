@@ -12,7 +12,7 @@
   "author": "Chien-Fu Chen <chienfuchen32@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    axios": ">=0.21.1",
+    "axios": ">=0.21.2"
     "konva": "^1.2.2",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
